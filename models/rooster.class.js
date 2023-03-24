@@ -10,6 +10,13 @@ class Rooster extends GeneralObject {
 
   constructor() {
     super().loadImage(this.imageSrcPath);
-    console.log(this.basicCharacterPosition);
+  }
+
+  drawRooster(x, y) {
+    if (x && y) {
+      this.canPosX = x;
+      this.canPosY = y;
+    }
+    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
 }

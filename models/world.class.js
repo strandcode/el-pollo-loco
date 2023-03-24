@@ -1,91 +1,67 @@
 class World {
-  // character = new Character();
-  // enemies = [
-  //   new Chicken(),
-  //   new Chicken(),
-  //   new Chicken()
-  // ];
-  // clouds = new Cloud();
-  // From upper left corner
-  // groundLine;
-  // skyLine;
-  // leftLine;
-  // rightLine;
+
+  // NOTE Create world's objects
   background = new Background();
+  clouds = new Cloud();
   pepe = new Pepe();
   chick = new Chick();
+  chicks = [];
   hen = new Hen();
   rooster = new Rooster();
   coin = new Coin();
   canvas;
   ctx;
 
-
-  constructor(canvas) {
+  constructor() {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
-    console.log(this.pepe);
-    console.log(this.pepe.img.src);
-    this.draw();
+    this.createChicks(250, 50, 5);
   }
 
-  draw() {
+  createChicks(startX, spreadX, quantity) {
+    let chicks = [];
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newChick = new Chick();
+      newChick.canPosX = 0;
+      newChick.canPosX += startX + startSpreadX;
+      console.log(newChick.canPosX);
+      startSpreadX += spreadX;
+      chicks.push(newChick);
+    }
+    this.chicks = chicks;
+    console.log(chicks);
+  }
+
+
+
+
+
+  drawWorld() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawBackground();
-    this.drawPepe();
-    this.drawChick();
-    this.drawHen();
-    this.drawRooster();
-    // this.drawCoinTrio(50, 130);
-    this.drawCoinTrio(100, 130);
+    this.background.drawBackground();
+    this.clouds.drawCloud();
+    this.chicks.forEach(chick => chick.drawChick());
+    this.hen.drawHen();
+    this.rooster.drawRooster();
+    this.pepe.drawPepe();
+    this.coin.drawCoin(50, 50);
+    this.coin.drawCoinQuartet(100, 100);
+
     let self = this;
-    requestAnimationFrame(function () { // Draw wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte)
-      self.draw();
+    requestAnimationFrame(function () {
+      // NOTE Draw wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte)
+      self.drawWorld();
     });
   }
 
 
   // TODO Funktionen zusammenfassen
-  drawCharacterToDisplay(gameCharacter) {
-    this.ctx.drawImage(this.gameCharacter.img, this.gameCharacter.canPosX, this.gameCharacter.canPosY, this.gameCharacter.scaledWidth, this.gameCharacter.scaledHeight);
-  }
-
-  drawCoin(x, y) {
-    this.coin.canPosX = x;
-    this.coin.canPosY = y;
-    this.ctx.drawImage(this.coin.img, this.coin.canPosX, this.coin.canPosY, this.coin.scaledWidth, this.coin.scaledHeight);
-  }
-
-  drawCoinTrio(x, y) {
-    let startX = x;
-    let startY = y;
-    let space = 30;
-    this.drawCoin(startX, startY);
-    this.drawCoin((startX + space), (startY - space));
-    this.drawCoin((startX + 2 * space), (startY - 2 * space));
-  }
+  // drawCharacterToDisplay(gameCharacter) {
+  //   this.ctx.drawImage(this.gameCharacter.img, this.gameCharacter.canPosX, this.gameCharacter.canPosY, this.gameCharacter.scaledWidth, this.gameCharacter.scaledHeight);
+  // }
 
 
-  drawPepe() {
-    this.ctx.drawImage(this.pepe.img, this.pepe.canPosX, this.pepe.canPosY, this.pepe.scaledWidth, this.pepe.scaledHeight);
-  }
-
-
-  drawBackground() {
-    this.ctx.drawImage(this.background.img, this.background.canPosX, this.background.canPosY, this.background.scaledWidth, this.background.scaledHeight);
-  }
-
-
-
-  drawChick() {
-    this.ctx.drawImage(this.chick.img, this.chick.canPosX, this.chick.canPosY, this.chick.scaledWidth, this.chick.scaledHeight);
-  }
-  drawHen() {
-    this.ctx.drawImage(this.hen.img, this.hen.canPosX, this.hen.canPosY, this.hen.scaledWidth, this.hen.scaledHeight);
-  }
-  drawRooster() {
-    this.ctx.drawImage(this.rooster.img, this.rooster.canPosX, this.rooster.canPosY, this.rooster.scaledWidth, this.rooster.scaledHeight);
-  }
 
   // LINK https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
   // drawCharacter() {

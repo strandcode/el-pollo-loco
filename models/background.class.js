@@ -11,4 +11,8 @@ class Background extends GeneralObject {
   constructor() {
     super().loadImage(this.imageSrcPath);
   }
+
+  drawBackground() {
+    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+  }
 }

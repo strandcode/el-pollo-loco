@@ -1,7 +1,8 @@
 function init() {
   const canvas = document.getElementById('canvas');
-  const world = new World(canvas);
   new GameDisplay(canvas, 720, 480);
+  const world = new World(canvas);
+  world.drawWorld();
 }
 
 

@@ -11,4 +11,12 @@ class Hen extends GeneralObject {
   constructor() {
     super().loadImage(this.imageSrcPath);
   }
+
+  drawHen(x, y) {
+    if (x && y) {
+      this.canPosX = x;
+      this.canPosY = y;
+    }
+    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+  }
 }

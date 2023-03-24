@@ -7,9 +7,12 @@ class GeneralObject {
   scaledHeight;
   canPosX;
   canPosY;
+  canvas;
+  ctx;
 
   constructor() {
-    console.log('GeneralObject was used');
+    this.canvas = document.getElementById('canvas');
+    this.ctx = canvas.getContext('2d');
   }
 
   loadImage(path) {

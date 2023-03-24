@@ -11,4 +11,20 @@ class Coin extends GeneralObject {
   constructor() {
     super().loadImage(this.imageSrcPath);
   }
+
+  drawCoin(x, y) {
+    this.canPosX = x;
+    this.canPosY = y;
+    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+  }
+
+  drawCoinQuartet(x, y) {
+    let startX = x;
+    let startY = y;
+    let space = 25;
+    this.drawCoin(startX, startY);
+    this.drawCoin((startX + 1 * space), (startY - 1 * space));
+    this.drawCoin((startX + 1 * space), (startY + 1 * space));
+    this.drawCoin((startX + 2 * space), (startY - 0 * space));
+  }
 }
