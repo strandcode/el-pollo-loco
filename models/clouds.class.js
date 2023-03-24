@@ -1,11 +1,11 @@
 class Cloud extends GeneralObject {
-  imageSrcPath = 'img/5_background/layers/4_clouds/full-clouds-reverse.png';
+  imageSrcPath = 'img/5_background/layers/4_clouds/full.png';
   originWidth = 3840;
   originHeight = 1080;
   scaleFactor = 0.4444;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = Math.floor(this.originHeight * this.scaleFactor);
-  canPosX = 10;
+  canPosX = 720;
   canPosY = -25;
 
   constructor() {
@@ -16,15 +16,17 @@ class Cloud extends GeneralObject {
     this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
 
+
+  // TODO Wolken noch richtig animieren
   move() {
     let movingClouds = setInterval(() => {
-      this.x = this.x - 1;
-      if (this.x <= -1400) {
-        this.x = 600;
+      this.canPosX = this.canPosX - 0.5;
+      if (this.canPosX <= -3000) {
+        this.canPosX = 600;
         clearInterval(movingClouds);
         this.move();
       }
-    }, 50);
+    }, 45);
   }
 }
 

@@ -3,12 +3,14 @@ class World {
   // NOTE Create world's objects
   background = new Background();
   clouds = new Cloud();
-  pepe = new Pepe();
+  pepe_1 = new Pepe();
+  pepe_2 = new Pepe();
   chick = new Chick();
   chicks = [];
   hen = new Hen();
   rooster = new Rooster();
   coin = new Coin();
+  bottle = new Bottle();
   canvas;
   ctx;
 
@@ -16,6 +18,8 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.createChicks(250, 50, 5);
+    this.clouds.move();
+    console.log(this.pepe_2);
   }
 
   createChicks(startX, spreadX, quantity) {
@@ -25,12 +29,10 @@ class World {
       let newChick = new Chick();
       newChick.canPosX = 0;
       newChick.canPosX += startX + startSpreadX;
-      console.log(newChick.canPosX);
       startSpreadX += spreadX;
       chicks.push(newChick);
     }
     this.chicks = chicks;
-    console.log(chicks);
   }
 
 
@@ -44,8 +46,12 @@ class World {
     this.chicks.forEach(chick => chick.drawChick());
     this.hen.drawHen();
     this.rooster.drawRooster();
-    this.pepe.drawPepe();
+    this.pepe_1.drawPepe();
+    this.pepe_2.jump(150);
+
     this.coin.drawCoin(50, 50);
+    this.bottle.drawBottle(120, 350);
+
     this.coin.drawCoinQuartet(100, 100);
 
     let self = this;
