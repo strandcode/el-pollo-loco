@@ -1,10 +1,14 @@
-class Background extends MovableObject {
-  x = 0;
-  y = 0;
-  width = 3840 * 0.4444;
-  height = 1080 * 0.4444;
-  // src: 3840 x 1080
+class Background extends GeneralObject {
+  imageSrcPath = 'img/5_background/complete_background.png';
+  originWidth = 3840;
+  originHeight = 1080;
+  scaleFactor = 0.4444;
+  scaledWidth = this.originWidth * this.scaleFactor;
+  scaledHeight = this.originHeight * this.scaleFactor;;
+  canPosX = 0;
+  canPosY = 0;
+
   constructor() {
-    super().loadImage('img/5_background/complete_background.png');
+    super().loadImage(this.imageSrcPath);
   }
 }

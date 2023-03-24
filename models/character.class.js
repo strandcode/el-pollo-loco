@@ -1,4 +1,4 @@
-class Character extends MovableObject {
+class Character extends GeneralObject {
   x = 30;
   y = 150; //480 - (300)
   width = 610 * 0.25;
@@ -6,7 +6,8 @@ class Character extends MovableObject {
   // src: 610 x 1200
 
   constructor() {
-    super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
+    super();
+    // super().loadImage('img/2_character_pepe/1_idle/idle/I-1.png');
   }
 
   jump() {

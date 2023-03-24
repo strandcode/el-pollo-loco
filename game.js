@@ -1,17 +1,20 @@
-let canvas;
-let ctx;
-let world;
-
 function init() {
-  // canvas width="720" height="480"
-  canvas = document.getElementById('canvas');
-  world = new World(canvas);
-
-  console.log(world);
-  console.log(world.character);
-  console.log(world.enemies);
+  const canvas = document.getElementById('canvas');
+  const world = new World(canvas);
+  new GameDisplay(canvas, 720, 480);
 }
 
 
-// Additional information
-// LINK https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
+
+
+
+
+// const GD = GameDisplay.prototype;
+// const G = GlobalObject.prototype;
+// const P = Pepe.prototype;
+// const C = Chick.prototype;
+// const H = Hen.prototype;
+// const R = Rooster.prototype;
+// const Co = Coin.prototype;
+// const B = Bottle.prototype;
+// const S = Statusbar.prototype;
