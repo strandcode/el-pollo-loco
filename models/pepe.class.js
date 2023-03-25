@@ -7,10 +7,6 @@ class Pepe extends GeneralObject {
   scaledHeight = this.originHeight * this.scaleFactor;;
   canPosX = 30;
   canPosY = 150;
-  collection = {};
-  currentImage;
-
-
 
   constructor() {
     super().loadImage(this.imageSrcPath);
@@ -25,11 +21,11 @@ class Pepe extends GeneralObject {
     // this.animate('jump');
     // this.animate('hurt');
     // this.animate('dead');
-    this.animate('walk');
-
+    // this.animate('walk');
+    this.walkRight();
   }
 
-  drawPepe(x, y) {
+  draw(x, y) {
     if (x && y) {
       this.canPosX = x;
       this.canPosY = y;
@@ -46,6 +42,19 @@ class Pepe extends GeneralObject {
         this.currentImage = 0;
       }
       this.img = this.collection[movement][this.currentImage];
+      this.currentImage++;
+      if (this.canPosX > 720) { this.canPosX = -150 }
+      this.canPosX = this.canPosX + 8;
+    }, 200);
+  }
+
+  walkRight() {
+    this.currentImage = 0;
+    setInterval(() => {
+      if (this.currentImage >= this.collection.walk.length) {
+        this.currentImage = 0;
+      }
+      this.img = this.collection.walk[this.currentImage];
       this.currentImage++;
       if (this.canPosX > 720) { this.canPosX = -150 }
       this.canPosX = this.canPosX + 8;

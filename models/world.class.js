@@ -14,12 +14,14 @@ class World {
   canvas;
   ctx;
 
-  constructor() {
+  constructor(canvas) {
     this.ctx = canvas.getContext('2d');
     this.canvas = canvas;
     this.createChicks(250, 50, 5);
     this.clouds.move();
     console.log(this.pepe_2);
+    console.log(this.chicks);
+    this.drawWorld();
   }
 
   createChicks(startX, spreadX, quantity) {
@@ -46,7 +48,7 @@ class World {
     this.chicks.forEach(chick => chick.drawChick());
     this.hen.drawHen();
     this.rooster.drawRooster();
-    this.pepe_1.drawPepe();
+    this.pepe_1.draw();
 
     this.coin.drawCoin(50, 50);
     this.bottle.drawBottle(120, 350);

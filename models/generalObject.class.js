@@ -10,6 +10,9 @@ class GeneralObject {
   canvas;
   ctx;
 
+  collection = {};
+  currentImage;
+
   constructor() {
     this.canvas = document.getElementById('canvas');
     this.ctx = canvas.getContext('2d');
