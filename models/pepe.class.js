@@ -8,6 +8,7 @@ class Pepe extends GeneralObject {
   canPosX = 30;
   canPosY = 150;
   collection = {};
+  currentImage;
 
 
 
@@ -19,6 +20,13 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsJump', 'jump');
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
+    // this.animate('idle');
+    // this.animate('longIdle');
+    // this.animate('jump');
+    // this.animate('hurt');
+    // this.animate('dead');
+    this.animate('walk');
+
   }
 
   drawPepe(x, y) {
@@ -29,15 +37,32 @@ class Pepe extends GeneralObject {
     this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
 
+  animate(movement) {
+    this.currentImage = 0;
+    setInterval(() => {
+      // REVIEW let i = this.currentImage % this.collection[movement].length;
+      // this.img = this.collection[movement][i];
+      if (this.currentImage >= this.collection[movement].length) {
+        this.currentImage = 0;
+      }
+      this.img = this.collection[movement][this.currentImage];
+      this.currentImage++;
+      if (this.canPosX > 720) { this.canPosX = -150 }
+      this.canPosX = this.canPosX + 8;
+    }, 200);
+  }
+
   // FIXME TimeOut
   jump(startX) {
     this.canPosX = startX;
     for (let i = 0; i < this.collection.jump.length; i++) {
-      // setTimeout(() => {
-      let img = this.collection.jump[i];
-      this.ctx.drawImage(img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-      // }, 500);
+      setTimeout(this.pepeJump, 500);
     }
+  }
+
+  pepeJump() {
+    let img = this.collection.jump[i];
+    this.ctx.drawImage(img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
 
 

@@ -47,7 +47,6 @@ class World {
     this.hen.drawHen();
     this.rooster.drawRooster();
     this.pepe_1.drawPepe();
-    this.pepe_2.jump(150);
 
     this.coin.drawCoin(50, 50);
     this.bottle.drawBottle(120, 350);
