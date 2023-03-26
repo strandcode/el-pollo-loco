@@ -1,5 +1,4 @@
-class Cloud extends GeneralObject {
-  imageSrcPath = 'img/5_background/layers/4_clouds/full.png';
+class Clouds extends GeneralObject {
   originWidth = 3840;
   originHeight = 1080;
   scaleFactor = 0.4444;
@@ -9,12 +8,14 @@ class Cloud extends GeneralObject {
   canPosY = -25;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
+    this.loadCollection('imgPathsComplete', 'complete');
+    this.img = this.collection.complete[0];
   }
 
-  drawCloud() {
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-  }
+  imgPathsComplete = [
+    'img/5_background/layers/4_clouds/full.png'
+  ];
 
 
   // TODO Wolken noch richtig animieren
@@ -29,6 +30,3 @@ class Cloud extends GeneralObject {
     }, 45);
   }
 }
-
-
-// 

@@ -1,25 +1,16 @@
 class Chick extends GeneralObject {
-  imageSrcPath = 'img/3_enemies_chicken/chicken_small/1_walk/1_w.png';
   originWidth = 236;
   originHeight = 210;
   scaleFactor = 0.25;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;
   canPosX = 250;
-  canPosY = 380; //  gameDisplayHeight + GroundLine - scaledWidth
+  canPosY = 380;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
     this.loadCollection('imgPathsWalk', 'walk');
-    this.walkLeft();
-  }
-
-  drawChick(x, y) {
-    if (x && y) {
-      this.canPosX = x;
-      this.canPosY = y;
-    }
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+    this.img = this.collection.walk[0];
   }
 
   walkLeft() {
@@ -35,15 +26,20 @@ class Chick extends GeneralObject {
     }, 200);
   }
 
-
-  loadCollection(imgPathsName, key) {
-    this.collection[key] = [];
-    this[imgPathsName].forEach(element => {
-      let newImg = new Image();
-      newImg.src = element;
-      this.collection[key].push(newImg);
-    })
+  createChicks(startX, spreadX, quantity) {
+    this.chicks = [];
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newChick = new Chick();
+      newChick.canPosX = 0;
+      newChick.canPosX += startX + startSpreadX;
+      startSpreadX += spreadX;
+      this.chicks.push(newChick);
+    }
   }
+
+
+
 
   imgPathsWalk = [
     'img/3_enemies_chicken/chicken_small/1_walk/1_w.png',

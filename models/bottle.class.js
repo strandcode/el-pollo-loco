@@ -1,5 +1,4 @@
 class Bottle extends GeneralObject {
-  imageSrcPath = 'img/6_salsa_bottle/salsa_bottle.png';
   originWidth = 400;
   originHeight = 400;
   scaleFactor = 0.25;
@@ -9,13 +8,14 @@ class Bottle extends GeneralObject {
   canPosY = 150;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
+    this.loadCollection('imgPathsComplete', 'complete');
+    this.img = this.collection.complete[0];
   }
 
-  drawBottle(x, y) {
-    this.canPosX = x;
-    this.canPosY = y;
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-  }
+  imgPathsComplete = [
+    'img/6_salsa_bottle/salsa_bottle.png'
+  ];
+
 
 }

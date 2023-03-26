@@ -1,5 +1,4 @@
 class Rooster extends GeneralObject {
-  imageSrcPath = 'img/4_enemie_boss_chicken/1_walk/G1.png';
   originWidth = 1045;
   originHeight = 1217;
   scaleFactor = 0.19;
@@ -9,7 +8,9 @@ class Rooster extends GeneralObject {
   canPosY = 220;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
+    this.loadCollection('imgPathsWalk', 'walk');
+    this.img = this.collection.walk[0];
   }
 
   drawRooster(x, y) {
@@ -19,4 +20,11 @@ class Rooster extends GeneralObject {
     }
     this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
+
+  imgPathsWalk = [
+    'img/4_enemie_boss_chicken/1_walk/G1.png',
+    'img/4_enemie_boss_chicken/1_walk/G2.png',
+    'img/4_enemie_boss_chicken/1_walk/G3.png',
+    'img/4_enemie_boss_chicken/1_walk/G4.png'
+  ];
 }

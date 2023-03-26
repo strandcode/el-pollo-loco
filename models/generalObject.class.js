@@ -1,5 +1,4 @@
 class GeneralObject {
-  imageSrcPath;
   originWidth;
   originHeight;
   scaleFactor;
@@ -14,22 +13,29 @@ class GeneralObject {
   currentImage;
 
   constructor() {
-    this.canvas = document.getElementById('canvas');
+    this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
   }
 
-  loadImage(path) {
-    this.img = new Image();
-    this.img.src = path;
+  // NOTE Diese Funktion zeichnet das currentImage in die world
+
+  // this.canPosX = x;
+  // this.canPosY = y;
+  draw() {
+    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
   }
 
-  moveLeft() {
-    console.log('Moving left');
+  // REVIEW Warum müssen die genaue als Objekt vorgeladen werden?
+  loadCollection(imgPathsName, key) {
+    this.collection[key] = [];
+    this[imgPathsName].forEach(element => {
+      let newImg = new Image();
+      newImg.src = element;
+      this.collection[key].push(newImg);
+    })
   }
 
-  moveRight() {
-    console.log('Moving right');
-  }
+
 
   // gravitation() 
 

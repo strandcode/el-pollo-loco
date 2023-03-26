@@ -1,5 +1,4 @@
 class Pepe extends GeneralObject {
-  imageSrcPath = 'img/2_character_pepe/1_idle/idle/I-1.png';
   originWidth = 610;
   originHeight = 1200;
   scaleFactor = 0.25;
@@ -9,29 +8,29 @@ class Pepe extends GeneralObject {
   canPosY = 150;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
     this.loadCollection('imgPathsIdle', 'idle');
     this.loadCollection('imgPathsLongIdle', 'longIdle');
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsJump', 'jump');
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
-    // this.animate('idle');
-    // this.animate('longIdle');
-    // this.animate('jump');
-    // this.animate('hurt');
-    // this.animate('dead');
-    // this.animate('walk');
-    this.walkRight();
+    this.img = this.collection.idle[0];
   }
 
-  draw(x, y) {
-    if (x && y) {
-      this.canPosX = x;
-      this.canPosY = y;
-    }
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+  walkRight() {
+    this.currentImage = 0;
+    setInterval(() => {
+      if (this.currentImage >= this.collection.walk.length) {
+        this.currentImage = 0;
+      }
+      this.img = this.collection.walk[this.currentImage];
+      this.currentImage++;
+      if (this.canPosX > 720) { this.canPosX = -150 }
+      this.canPosX = this.canPosX + 8;
+    }, 200);
   }
+
 
   animate(movement) {
     this.currentImage = 0;
@@ -48,42 +47,15 @@ class Pepe extends GeneralObject {
     }, 200);
   }
 
-  walkRight() {
-    this.currentImage = 0;
-    setInterval(() => {
-      if (this.currentImage >= this.collection.walk.length) {
-        this.currentImage = 0;
-      }
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage++;
-      if (this.canPosX > 720) { this.canPosX = -150 }
-      this.canPosX = this.canPosX + 8;
-    }, 200);
+
+  moveLeft() {
+    console.log('Moving left');
   }
 
-  // FIXME TimeOut
-  jump(startX) {
-    this.canPosX = startX;
-    for (let i = 0; i < this.collection.jump.length; i++) {
-      setTimeout(this.pepeJump, 500);
-    }
+  moveRight() {
+    console.log('Moving right');
   }
 
-  pepeJump() {
-    let img = this.collection.jump[i];
-    this.ctx.drawImage(img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-  }
-
-
-  // REVIEW Warum müssen die genaue als Objekt vorgeladen werden?
-  loadCollection(imgPathsName, key) {
-    this.collection[key] = [];
-    this[imgPathsName].forEach(element => {
-      let newImg = new Image();
-      newImg.src = element;
-      this.collection[key].push(newImg);
-    })
-  }
 
 
   imgPathsIdle = [

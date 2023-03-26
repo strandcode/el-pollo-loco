@@ -1,5 +1,4 @@
 class Background extends GeneralObject {
-  imageSrcPath = 'img/5_background/complete_background.png';
   originWidth = 3840;
   originHeight = 1080;
   scaleFactor = 0.4444;
@@ -9,10 +8,12 @@ class Background extends GeneralObject {
   canPosY = 0;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
+    super();
+    this.loadCollection('imgPathsComplete', 'complete');
+    this.img = this.collection.complete[0];
   }
 
-  drawBackground() {
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-  }
+  imgPathsComplete = [
+    'img/5_background/complete_background.png'
+  ];
 }

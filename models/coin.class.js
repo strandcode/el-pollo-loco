@@ -1,5 +1,4 @@
 class Coin extends GeneralObject {
-  imageSrcPath = 'img/8_coin/coin_1.png';
   originWidth = 300;
   originHeight = 301;
   scaleFactor = 0.25;
@@ -9,13 +8,9 @@ class Coin extends GeneralObject {
   canPosY = 150;
 
   constructor() {
-    super().loadImage(this.imageSrcPath);
-  }
-
-  drawCoin(x, y) {
-    this.canPosX = x;
-    this.canPosY = y;
-    this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+    super();
+    this.loadCollection('imgPathsComplete', 'complete');
+    this.img = this.collection.complete[0];
   }
 
   drawCoinQuartet(x, y) {
@@ -27,4 +22,9 @@ class Coin extends GeneralObject {
     this.drawCoin((startX + 1 * space), (startY + 1 * space));
     this.drawCoin((startX + 2 * space), (startY - 0 * space));
   }
+
+  imgPathsComplete = [
+    'img/8_coin/coin_1.png',
+    'img/8_coin/coin_2.png'
+  ];
 }

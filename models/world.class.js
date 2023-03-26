@@ -1,27 +1,46 @@
 class World {
 
-  // NOTE Create world's objects
-  background = new Background();
-  clouds = new Cloud();
-  pepe_1 = new Pepe();
-  pepe_2 = new Pepe();
+  // NOTE Create all world's objects from related classes
+  background = new Background();  // TODO load layers
+  clouds = new Clouds();
+  pepe = new Pepe();
   chick = new Chick();
   chicks = [];
   hen = new Hen();
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
-  canvas;
-  ctx;
+  // TODO statusbar
 
-  constructor(canvas) {
-    this.ctx = canvas.getContext('2d');
+  constructor() {
     this.canvas = canvas;
-    this.createChicks(250, 50, 5);
-    this.clouds.move();
-    console.log(this.pepe_2);
-    console.log(this.chicks);
+    this.ctx = canvas.getContext('2d');
     this.drawWorld();
+    this.createChicks(200, 50, 5);
+  }
+
+
+
+
+  // NOTE Diese Funktion generiert immer das aktuelle Bild des jeweiligen World-Objectes in einer fortlaufenden Schleife
+
+  drawWorld() {
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.background.draw();
+    this.clouds.draw();
+    this.chick.draw();
+    this.chicks.forEach(chick => chick.draw());
+    this.hen.draw();
+    this.rooster.draw();
+    this.coin.draw();
+    this.bottle.draw();
+    this.pepe.draw();
+
+    let self = this;
+    requestAnimationFrame(function () {
+      // NOTE Draw wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte)
+      self.drawWorld();
+    });
   }
 
   createChicks(startX, spreadX, quantity) {
@@ -36,32 +55,6 @@ class World {
     }
     this.chicks = chicks;
   }
-
-
-
-
-
-  drawWorld() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.background.drawBackground();
-    this.clouds.drawCloud();
-    this.chicks.forEach(chick => chick.drawChick());
-    this.hen.drawHen();
-    this.rooster.drawRooster();
-    this.pepe_1.draw();
-
-    this.coin.drawCoin(50, 50);
-    this.bottle.drawBottle(120, 350);
-
-    this.coin.drawCoinQuartet(100, 100);
-
-    let self = this;
-    requestAnimationFrame(function () {
-      // NOTE Draw wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte)
-      self.drawWorld();
-    });
-  }
-
 
   // TODO Funktionen zusammenfassen
   // drawCharacterToDisplay(gameCharacter) {
