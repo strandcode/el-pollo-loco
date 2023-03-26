@@ -17,10 +17,10 @@ class Coin extends GeneralObject {
     let startX = x;
     let startY = y;
     let space = 25;
-    this.drawCoin(startX, startY);
-    this.drawCoin((startX + 1 * space), (startY - 1 * space));
-    this.drawCoin((startX + 1 * space), (startY + 1 * space));
-    this.drawCoin((startX + 2 * space), (startY - 0 * space));
+    this.draw(startX, startY);
+    this.draw((startX + 1 * space), (startY - 1 * space));
+    this.draw((startX + 1 * space), (startY + 1 * space));
+    this.draw((startX + 2 * space), (startY - 0 * space));
   }
 
   imgPathsComplete = [

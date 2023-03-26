@@ -10,6 +10,7 @@ class Chick extends GeneralObject {
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
+    this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.walk[0];
   }
 
@@ -47,5 +48,8 @@ class Chick extends GeneralObject {
     'img/3_enemies_chicken/chicken_small/1_walk/3_w.png',
   ];
 
+  imgPathsDead = [
+    'img/3_enemies_chicken/chicken_small/2_dead/dead.png',
+  ];
 
 }

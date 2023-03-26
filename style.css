@@ -9,3 +9,16 @@ body {
 canvas {
   background-color: black;
 }
+
+.start-screen {
+  position: absolute;
+  inset: 0;
+  background-image: url(img/9_intro_outro_screens/start/startscreen_1.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.d-none {
+  display: none;
+}
