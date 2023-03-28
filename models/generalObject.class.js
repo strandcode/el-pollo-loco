@@ -8,6 +8,8 @@ class GeneralObject {
   canPosY;
   canvas;
   ctx;
+  speedY = 0;
+  accelaration = 1;
 
   collection = {};
   currentImage;
@@ -22,6 +24,16 @@ class GeneralObject {
 
   // NOTE Diese Funktion zeichnet das currentImage in die world
 
+  // REVIEW Warum müssen die genaue als Objekt vorgeladen werden?
+  loadCollection(imgPathsName, key) {
+    this.collection[key] = [];
+    this[imgPathsName].forEach(element => {
+      let newImg = new Image();
+      newImg.src = element;
+      this.collection[key].push(newImg);
+    })
+  }
+
   draw() {
     if (this.isImageFlipped) {
       this.flipImage();
@@ -32,7 +44,7 @@ class GeneralObject {
   }
 
   flipImage() {
-    // Speichert das aktuelle Bild     
+    // Speichert das aktuelle Bild mit dessen Eigenschaften   
     this.ctx.save();
 
     // Berechnet die Veschiebung
@@ -50,16 +62,12 @@ class GeneralObject {
     // Stellt das ursprüngliche (gesavete) Bild wieder her.
     this.ctx.restore()
   }
-
-  // REVIEW Warum müssen die genaue als Objekt vorgeladen werden?
-  loadCollection(imgPathsName, key) {
-    this.collection[key] = [];
-    this[imgPathsName].forEach(element => {
-      let newImg = new Image();
-      newImg.src = element;
-      this.collection[key].push(newImg);
-    })
-  }
+  // TODO Add gravity
+  // applyGravity() {
+  // setInterval(() => {
+  //   this.canPosY += this
+  // }, 1000 / 25);
+  // }
 
 
   // gravitation() 

@@ -4,7 +4,7 @@ class Rooster extends GeneralObject {
   scaleFactor = 0.19;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = Math.floor(this.originHeight * this.scaleFactor);
-  canPosX = 430;
+  canPosX = 3500;
   canPosY = 220;
 
   constructor() {

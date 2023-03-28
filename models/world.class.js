@@ -17,6 +17,11 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
     this.createChicks(200, 50, 5);
+    console.log(this.background);
+    setInterval(() => {
+      console.log(this.pepe.canPosX);
+    }, 1000);
+    console.log(this.clouds);
   }
 
 
@@ -26,18 +31,20 @@ class World {
 
   drawWorld() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.background.draw();
-    this.clouds.draw();
-    // this.chicks.forEach(chick => chick.draw());
-    // this.hen.draw();
-    // this.rooster.draw();
+    this.ctx.translate(this.pepe.worldFocus, 0);
+    this.background.drawBackground();
+    this.chicks.forEach(chick => chick.draw());
+    this.hen.draw();
+    this.rooster.draw();
     this.coin.draw();
     this.bottle.draw();
     this.pepe.draw();
+    this.clouds.draw();
+    this.ctx.translate(-this.pepe.worldFocus, 0);
 
     let self = this;
     requestAnimationFrame(function () {
-      // NOTE Draw wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte)
+      // NOTE drawWorld() wird immer wieder aufgerufen bis zu 60fps (abhängig von Grafikkarte und der Bildschirmfrequenz)
       self.drawWorld();
     });
   }

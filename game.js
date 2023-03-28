@@ -5,13 +5,11 @@ const keyboard = new Keyboard();
 const world = new World();
 
 
-world.clouds.move();
 
 world.chicks.forEach(chick => chick.walkLeft());
 setTimeout(() => { world.hen.walkLeft(); }, 4500);
 setTimeout(() => { world.rooster.walkLeft(); }, 6000);
 
-console.log(world.coin);
 
 function startGame() {
   const startScreen = document.querySelector('.start-screen');
@@ -20,8 +18,15 @@ function startGame() {
 
 // TODO exclude to controlPepe.js
 
+
+// NOTE Global key status survey
 let isArrowRightPressed = false;
 let isArrowLeftPressed = false;
+let isArrowUpPressed = false;
+let isArrowDownPressed = false;
+let isSpacePressed = false;
+let isKeyDPressed = false;
+let isKeyEscapePressed = false;
 
 
 function controlPepe() {
@@ -44,10 +49,11 @@ function controlPepe() {
     }
   });
 
-  // Call world.pepe.walkRight() continuously while the right key is pressed
+  // Call pepe's move functions continuously (every 60ms) while the right key is pressed
   setInterval(() => {
     if (isArrowRightPressed) {
       world.pepe.walkRight();
+
     }
     if (isArrowLeftPressed) {
       world.pepe.walkLeft();
