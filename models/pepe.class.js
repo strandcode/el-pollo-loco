@@ -5,7 +5,7 @@ class Pepe extends GeneralObject {
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;;
   canPosX = 100;
-  canPosY = 150;
+  canPosY = 130;
   currentImage = 0;
 
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
@@ -22,6 +22,7 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.idle[0];
+    this.applyGravity();
   }
 
 
@@ -34,47 +35,56 @@ class Pepe extends GeneralObject {
     }
     if (this.canPosX >= 100 && this.canPosX < 4200) {
       this.walking_sound.play();
-      this.canPosX += 35;
-      this.worldFocus += -35;
+      this.canPosX += 8;
+      this.worldFocus += -8;
       this.img = this.collection.walk[this.currentImage];
       this.currentImage++;
     }
   }
 
-  walkLeft() {
-    this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
+  moveLeft() {
+    // this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
 
-    if (this.canPosX < -this.scaledWidth) {
-      this.canPosX = this.canvas.width;
-    }
-
+    // Damit Pepe nicht aus der Welt rennt?
     if (this.canPosX > 110 && this.canPosX < 4300) {
-      this.walking_sound.play();
-      this.canPosX += -15;
-      this.worldFocus += 15;
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage--;
+      this.canPosX += -8;
+      this.worldFocus += 8;
+      // if(isPepeFlying == false ) {
+      //   this.animateWalk(leftwards);
+      // }
     }
+  }
+
+  //  TODO  animateWalk(direction) {
+  //     this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
+  //     this.img = this.collection.walk[this.currentImage];
+  //     this.currentImage--;
+
+
+  //     this.walking_sound.play();
+  // }
+
+
+  jump() {
+    setInterval(() => {
+      isPepeFlying = true;
+      if (this.canPosY > -50 && isPepeJumping == true) {
+        this.canPosY -= this.speedY;
+        this.speedY += this.accelaration;
+        if (this.canPosY > -50) {
+          this.canPosY = -50;
+        }
+
+      }
+    }, 60);
   }
 
 
 
 
 
-  // animate(movement) {
-  //   this.currentImage = 0;
-  //   setInterval(() => {
-  //     // REVIEW let i = this.currentImage % this.collection[movement].length;
-  //     // this.img = this.collection[movement][i];
-  //     if (this.currentImage >= this.collection[movement].length) {
-  //       this.currentImage = 0;
-  //     }
-  //     this.img = this.collection[movement][this.currentImage];
-  //     this.currentImage++;
-  //     if (this.canPosX > 720) { this.canPosX = -150 }
-  //     this.canPosX = this.canPosX + 8;
-  //   }, 200);
-  // }
+
+
 
   imgPathsIdle = [
     'img/2_character_pepe/1_idle/idle/I-1.png',

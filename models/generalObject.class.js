@@ -9,7 +9,7 @@ class GeneralObject {
   canvas;
   ctx;
   speedY = 0;
-  accelaration = 1;
+  accelaration = 1.5;
 
   collection = {};
   currentImage;
@@ -62,14 +62,23 @@ class GeneralObject {
     // Stellt das ursprüngliche (gesavete) Bild wieder her.
     this.ctx.restore()
   }
+
   // TODO Add gravity
-  // applyGravity() {
-  // setInterval(() => {
-  //   this.canPosY += this
-  // }, 1000 / 25);
+  applyGravity() {
+    setInterval(() => {
+      if (this.canPosY < 130 && isPepeJumping == false) {
+        this.canPosY += this.speedY;
+        this.speedY += this.accelaration;
+        if (this.canPosY < 130) {
+          this.canPosY = 130;
+        }
+      }
+    }, 60);
+  }
+
+  // isAboveGround() {
+  //   return 
   // }
 
-
-  // gravitation() 
 
 }

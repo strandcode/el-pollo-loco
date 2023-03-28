@@ -22,15 +22,20 @@ function startGame() {
 // NOTE Global key status survey
 let isArrowRightPressed = false;
 let isArrowLeftPressed = false;
+let isSpacePressed = false;
+
 let isArrowUpPressed = false;
 let isArrowDownPressed = false;
-let isSpacePressed = false;
 let isKeyDPressed = false;
 let isKeyEscapePressed = false;
+
+let isPepeJumping = false;
+let isPepeFlying = false;
 
 
 function controlPepe() {
   window.addEventListener('keydown', (event) => {
+    console.log(event.code);
     if (event.code == "ArrowRight") {
       isArrowRightPressed = true;
     }
@@ -38,7 +43,12 @@ function controlPepe() {
       isArrowLeftPressed = true;
       world.pepe.isImageFlipped = true;
     }
+    if (event.code == "Space") {
+      isSpacePressed = true;
+      isPepeJumping = true;
+    }
   });
+
   window.addEventListener('keyup', (event) => {
     if (event.code == "ArrowRight") {
       isArrowRightPressed = false;
@@ -47,17 +57,27 @@ function controlPepe() {
       isArrowLeftPressed = false;
       world.pepe.isImageFlipped = false;
     }
+    if (event.code == "Space") {
+      isSpacePressed = false;
+      isPepeJumping = false;
+    }
   });
 
-  // Call pepe's move functions continuously (every 60ms) while the right key is pressed
+  // Intervall of 10ms is the keypressed reaction time
   setInterval(() => {
     if (isArrowRightPressed) {
       world.pepe.walkRight();
+    }
 
-    }
     if (isArrowLeftPressed) {
-      world.pepe.walkLeft();
+      world.pepe.moveLeft();
     }
-  }, 60);
+
+    if (isSpacePressed && isPepeFlying == false) {
+      world.pepe.jump()
+    }
+
+  }, 10);
+
 }
 controlPepe();

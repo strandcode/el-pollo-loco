@@ -17,11 +17,9 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
     this.createChicks(200, 50, 5);
-    console.log(this.background);
     setInterval(() => {
-      console.log(this.pepe.canPosX);
+      // console.log(this.pepe.canPosY);
     }, 1000);
-    console.log(this.clouds);
   }
 
 
