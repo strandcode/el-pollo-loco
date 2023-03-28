@@ -28,9 +28,9 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.background.draw();
     this.clouds.draw();
-    this.chicks.forEach(chick => chick.draw());
-    this.hen.draw();
-    this.rooster.draw();
+    // this.chicks.forEach(chick => chick.draw());
+    // this.hen.draw();
+    // this.rooster.draw();
     this.coin.draw();
     this.bottle.draw();
     this.pepe.draw();

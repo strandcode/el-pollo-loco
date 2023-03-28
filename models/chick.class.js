@@ -1,7 +1,7 @@
 class Chick extends GeneralObject {
   originWidth = 236;
   originHeight = 210;
-  scaleFactor = 0.25;
+  scaleFactor = 0.18;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;
   canPosX = 250;

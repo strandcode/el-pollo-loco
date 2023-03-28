@@ -7,7 +7,7 @@ class Keyboard {
   THROW = false;
 
   constructor() {
-    this.checkKeyboard();
+    // this.checkKeyboard();
   }
 
   checkKeyboard() {
@@ -32,5 +32,6 @@ class Keyboard {
       }
     });
   }
+
 
 }

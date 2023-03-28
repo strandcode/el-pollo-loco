@@ -6,6 +6,7 @@ class Pepe extends GeneralObject {
   scaledHeight = this.originHeight * this.scaleFactor;;
   canPosX = 30;
   canPosY = 150;
+  currentImage = 0;
 
   constructor() {
     super();
@@ -16,20 +17,38 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.idle[0];
+
   }
 
+
   walkRight() {
-    this.currentImage = 0;
-    setInterval(() => {
-      if (this.currentImage >= this.collection.walk.length) {
-        this.currentImage = 0;
-      }
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage++;
-      if (this.canPosX > 720) { this.canPosX = -150 }
-      this.canPosX = this.canPosX + 8;
-    }, 200);
+    if (this.currentImage <= 0) {
+      this.currentImage = this.collection.walk.length;
+    }
+    if (this.currentImage >= this.collection.walk.length) {
+      this.currentImage = 0;
+    }
+    if (this.canPosX > 720) {
+      this.canPosX = -150;
+    }
+    this.canPosX += 10;
+    this.img = this.collection.walk[this.currentImage];
+    this.currentImage++;
   }
+
+  walkLeft() {
+    this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
+
+    if (this.canPosX < -this.scaledWidth) {
+      this.canPosX = this.canvas.width;
+    }
+    this.canPosX += -10;
+    this.img = this.collection.walk[this.currentImage];
+    this.currentImage--;
+  }
+
+
+
 
 
   animate(movement) {

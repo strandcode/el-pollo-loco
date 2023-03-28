@@ -13,15 +13,23 @@ class Coin extends GeneralObject {
     this.img = this.collection.complete[0];
   }
 
-  drawCoinQuartet(x, y) {
-    let startX = x;
-    let startY = y;
-    let space = 25;
-    this.draw(startX, startY);
-    this.draw((startX + 1 * space), (startY - 1 * space));
-    this.draw((startX + 1 * space), (startY + 1 * space));
-    this.draw((startX + 2 * space), (startY - 0 * space));
-  }
+
+
+
+  // TODO Funktion erstellen
+  // createCoinQuartet(x, y) {
+  //   let startX = x;
+  //   let startY = y;
+  //   let space = 25;
+
+
+  //   this.draw(startX, startY);
+  //   this.draw((startX + 1 * space), (startY - 1 * space));
+  //   this.draw((startX + 1 * space), (startY + 1 * space));
+  //   this.draw((startX + 2 * space), (startY - 0 * space));
+
+  //   this.coinQuartet = coinQuartet;
+  // }
 
   imgPathsComplete = [
     'img/8_coin/coin_1.png',
