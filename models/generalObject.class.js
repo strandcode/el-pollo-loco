@@ -9,7 +9,7 @@ class GeneralObject {
   canvas;
   ctx;
   speedY = 0;
-  accelaration = 1.5;
+  accelaration = 1;
 
   collection = {};
   currentImage;
@@ -63,22 +63,21 @@ class GeneralObject {
     this.ctx.restore()
   }
 
-  // TODO Add gravity
   applyGravity() {
-    setInterval(() => {
-      if (this.canPosY < 130 && isPepeJumping == false) {
+    let gravity = setInterval(() => {
+      if (this.canPosY < 130) {
         this.canPosY += this.speedY;
         this.speedY += this.accelaration;
-        if (this.canPosY < 130) {
+        if (this.canPosY <= 130) {
           this.canPosY = 130;
+          this.isPepeJumping = false;
+          this.isPepeFlying = false;
+          clearInterval(gravity);
         }
       }
     }, 60);
   }
 
-  // isAboveGround() {
-  //   return 
-  // }
 
 
 }

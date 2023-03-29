@@ -5,8 +5,12 @@ class Pepe extends GeneralObject {
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;;
   canPosX = 100;
-  canPosY = 130;
+  canPosY = -50;
   currentImage = 0;
+
+  isPepeJumping = false;
+  isPepeFlying = false;
+  isPepeWalking = false;
 
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
   walking_sound = new Audio('audio/running_clipped.mp3');
@@ -26,55 +30,58 @@ class Pepe extends GeneralObject {
   }
 
 
-  walkRight() {
-    if (this.currentImage <= 0) {
-      this.currentImage = this.collection.walk.length;
-    }
-    if (this.currentImage >= this.collection.walk.length) {
-      this.currentImage = 0;
-    }
+  moveRight() {
     if (this.canPosX >= 100 && this.canPosX < 4200) {
-      this.walking_sound.play();
       this.canPosX += 8;
       this.worldFocus += -8;
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage++;
+      if (!this.isPepeFlying || !this.isPepeJumping) {
+        this.animateWalk();
+      }
     }
   }
 
   moveLeft() {
-    // this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
-
     // Damit Pepe nicht aus der Welt rennt?
     if (this.canPosX > 110 && this.canPosX < 4300) {
       this.canPosX += -8;
       this.worldFocus += 8;
-      // if(isPepeFlying == false ) {
-      //   this.animateWalk(leftwards);
-      // }
+      if (!this.isPepeFlying || !this.isPepeJumping) {
+        this.animateWalk();
+      }
     }
   }
 
-  //  TODO  animateWalk(direction) {
-  //     this.currentImage = (this.currentImage + this.collection.walk.length - 1) % this.collection.walk.length;
-  //     this.img = this.collection.walk[this.currentImage];
-  //     this.currentImage--;
+  animateWalk() {
+    if (!this.isPepeFlying || !this.isPepeJumping) {
+      if (this.currentImage <= 0) {
+        this.currentImage = this.collection.walk.length;
+      }
+      if (this.currentImage >= this.collection.walk.length) {
+        this.currentImage = 0;
+      }
 
-
-  //     this.walking_sound.play();
-  // }
+      // Setzt über das currentImage das Bild aus der walk serie
+      this.img = this.collection.walk[this.currentImage];
+      this.currentImage++;
+      this.walking_sound.play();
+    }
+  }
 
 
   jump() {
-    setInterval(() => {
-      isPepeFlying = true;
-      if (this.canPosY > -50 && isPepeJumping == true) {
+    let jump = setInterval(() => {
+      if (this.canPosY > -50) {
+        this.isPepeJumping = true;
+        // this.animateJump();
         this.canPosY -= this.speedY;
         this.speedY += this.accelaration;
-        if (this.canPosY > -50) {
-          this.canPosY = -50;
-        }
 
+        if (this.canPosY < -50) {
+          this.canPosY = -50;
+          this.isPepeJumping = false;
+          clearInterval(jump);
+          this.applyGravity();
+        }
       }
     }, 60);
   }
