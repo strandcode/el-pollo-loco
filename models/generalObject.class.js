@@ -64,7 +64,8 @@ class GeneralObject {
   }
 
   applyGravity() {
-    let gravity = setInterval(() => {
+
+    setInterval(() => {
       if (this.canPosY < 130) {
         this.canPosY += this.speedY;
         this.speedY += this.accelaration;
@@ -72,7 +73,6 @@ class GeneralObject {
           this.canPosY = 130;
           this.isPepeJumping = false;
           this.isPepeFlying = false;
-          clearInterval(gravity);
         }
       }
     }, 60);

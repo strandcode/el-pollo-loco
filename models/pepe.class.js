@@ -5,7 +5,7 @@ class Pepe extends GeneralObject {
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;;
   canPosX = 100;
-  canPosY = -50;
+  canPosY = 130;
   currentImage = 0;
 
   isPepeJumping = false;
@@ -26,7 +26,7 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.idle[0];
-    this.applyGravity();
+    // this.applyGravity();
   }
 
 
@@ -80,6 +80,7 @@ class Pepe extends GeneralObject {
           this.canPosY = -50;
           this.isPepeJumping = false;
           clearInterval(jump);
+          this.speedY = 0;
           this.applyGravity();
         }
       }
