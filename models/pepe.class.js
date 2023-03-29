@@ -29,6 +29,7 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.idle[0];
     this.applyGravity();
+    this.checkPepeOnGround();
   }
 
 
@@ -79,6 +80,18 @@ class Pepe extends GeneralObject {
       this.speedY = 0;
     }
   }
+
+  // TODO noch irgendwo mit einbauen?
+  checkPepeOnGround() {
+    setInterval(() => {
+      if (this.canPosY >= 125) {
+        this.isPepeJumping = false;
+        this.isPepeFlying = false;
+      }
+    }, 100);
+  }
+
+
 
 
 
