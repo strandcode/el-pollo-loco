@@ -3,10 +3,12 @@ class Pepe extends GeneralObject {
   originHeight = 1200;
   scaleFactor = 0.25;
   scaledWidth = this.originWidth * this.scaleFactor;
-  scaledHeight = this.originHeight * this.scaleFactor;;
+  scaledHeight = this.originHeight * this.scaleFactor;
   canPosX = 100;
   canPosY = 130;
   currentImage = 0;
+
+
 
   isPepeJumping = false;
   isPepeFlying = false;
@@ -26,7 +28,7 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.idle[0];
-    // this.applyGravity();
+    this.applyGravity();
   }
 
 
@@ -69,27 +71,14 @@ class Pepe extends GeneralObject {
 
 
   jump() {
-    let jump = setInterval(() => {
-      if (this.canPosY > -50) {
-        this.isPepeJumping = true;
-        // this.animateJump();
-        this.canPosY -= this.speedY;
-        this.speedY += this.accelaration;
-
-        if (this.canPosY < -50) {
-          this.canPosY = -50;
-          this.isPepeJumping = false;
-          clearInterval(jump);
-          this.speedY = 0;
-          this.applyGravity();
-        }
-      }
-    }, 60);
+    this.isPepeJumping = true;
+    this.isPepeFlying = true;
+    this.canPosY -= this.speedY;
+    this.speedY = 10;
+    if (this.canPosY < -50) {
+      this.speedY = 0;
+    }
   }
-
-
-
-
 
 
 

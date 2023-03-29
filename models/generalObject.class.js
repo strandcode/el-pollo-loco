@@ -8,6 +8,7 @@ class GeneralObject {
   canPosY;
   canvas;
   ctx;
+
   speedY = 0;
   accelaration = 1;
 
@@ -40,6 +41,13 @@ class GeneralObject {
     } else {
       this.isImageFlipped = false;
       this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+
+      // REVIEW Green rectangle
+      this.ctx.beginPath();
+      this.ctx.lineWidth = "1";
+      this.ctx.strokeStyle = "green";
+      this.ctx.rect(this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+      this.ctx.stroke();
     }
   }
 
@@ -66,16 +74,15 @@ class GeneralObject {
   applyGravity() {
 
     setInterval(() => {
-      if (this.canPosY < 130) {
-        this.canPosY += this.speedY;
-        this.speedY += this.accelaration;
-        if (this.canPosY <= 130) {
-          this.canPosY = 130;
-          this.isPepeJumping = false;
-          this.isPepeFlying = false;
-        }
+      if (this.isAboveGround()) {
+        this.canPosY -= this.speedY;
+        this.speedY -= this.accelaration;
       }
     }, 60);
+  }
+
+  isAboveGround() {
+    return this.canPosY < 130;
   }
 
 

@@ -32,7 +32,6 @@ let isKeyEscapePressed = false;
 
 function controlPepe() {
   window.addEventListener('keydown', (event) => {
-    console.log(event.code);
     if (event.code == "ArrowRight") {
       isArrowRightPressed = true;
       world.pepe.isPepeWalking = true;
@@ -74,7 +73,7 @@ function controlPepe() {
     }
 
     if (isSpacePressed) {
-      world.pepe.jump()
+      world.pepe.jump();
     }
 
   }, 10);
