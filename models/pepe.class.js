@@ -29,7 +29,7 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsJump', 'jump');
     this.loadCollection('imgPathsHurt', 'hurt');
-    this.loadCollection('imgPathsDead', 'dead');
+    this.loadCollection('imgPathsDead', 'dying');
     this.img = this.collection.idle[0];
     this.applyGravity();
     this.checkPepeOnGround();
@@ -71,6 +71,23 @@ class Pepe extends GeneralObject {
       this.currentImage++;
       this.walking_sound.play();
     }
+  }
+
+  animateDying() {
+    let intervalCount = 0;
+    let hadLastJump = false;
+
+    let interval = setInterval(() => {
+      this.img = this.collection.dying[intervalCount];
+      intervalCount++;
+      this.jump();
+      if (!hadLastJump) {
+        hadLastJump = true;
+      }
+      if (intervalCount == this.collection.dying.length) {
+        clearInterval(interval);
+      }
+    }, 1000);
   }
 
 

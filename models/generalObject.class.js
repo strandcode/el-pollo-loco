@@ -20,6 +20,9 @@ class GeneralObject {
   collection = {};
   currentImage;
 
+  energy = 100;
+  isDead = false;
+
   // NOTE Setzt den Status, ob das currentImage gedreht ist.
   isImageFlipped = false;
 
@@ -120,19 +123,42 @@ class GeneralObject {
     return this.canPosY < 130;
   }
 
-  // Junus Formel
-  isColliding() {
-    return this.canPosX + this.scaledWidth
+  // world.pepe.isColliding(enemy)
+  isColliding(movableObject) {
+    let characterX = this.canPosX + this.offsetX;
+    let characterY = this.canPosY + this.offsetY;
+    let characterW = this.scaledWidth + this.offsetW;
+    let characterH = this.height + this.offsetH;
+    let movableObjectX = movableObject.canPosX + movableObject.offsetX;
+    let movableObjectY = movableObject.canPosY + movableObject.offsetY;
+    let movableObjectW = movableObject.scaledWidth + movableObject.offsetW;
+    let movableObjectH = movableObject.height + movableObject.offsetH;
+
+    return characterX + characterW >= movableObjectX &&
+      characterX <= movableObjectX + movableObjectW
+    // &&
+    // characterY + characterH >= movableObjectY &&
+    // characterY <= movableObjectY + movableObjectH
+    // && movableObject.onCollisionCourse;
+    // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
   }
 
-  isColliding(obj) {
-    return (this.canPosX + this.scaledWidth) >= obj.canPosX &&
-      this.canPosX <= (obj.canPosX + obj.scaledWidth)
-    // &&
-    // (this.canPosY + this.offsetY + this.height) >= obj.canPosY &&
-    // (this.canPosY + this.offsetY) <= (obj.canPosY + obj.height) &&
-    // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+  isAttacked() {
+    this.energy -= 20; // 5
+    console.log('Pepe is attacked! Energy: ' + this.energy);
+    if (this.energy <= 0) {
+      this.energy = 0;
+      this.isDying();
+    }
+  }
 
+  isDying() {
+    if (!this.isDead) {
+      this.animateDying();
+      console.log('Pepe is dead');
+      this.isDead = true;
+    }
   }
 
 }

@@ -10,6 +10,7 @@ class World {
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
+  enemies = [this.chick, this.hen, this.rooster];
   // TODO statusbar
 
   constructor() {
@@ -24,9 +25,12 @@ class World {
   checkCollisions() {
     setInterval(() => {
       // this.level1.enemies.forEach((enemy) => {  });
-      if (this.pepe.isColliding(this.chick)) {
-        console.log('Hühnchen kollidiert mit Pepe!');
-      }
+
+      this.enemies.forEach((enemy) => {
+        if (this.pepe.isColliding(enemy)) {
+          this.pepe.isAttacked();
+        }
+      });
     }, 1000);
   }
 
