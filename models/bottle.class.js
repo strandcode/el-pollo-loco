@@ -7,6 +7,11 @@ class Bottle extends GeneralObject {
   canPosX = 30;
   canPosY = 350;
 
+  offsetX = 25;
+  offsetY = 0;
+  offsetW = -10;
+  offsetH = 0;
+
   constructor() {
     super();
     this.loadCollection('imgPathsComplete', 'complete');

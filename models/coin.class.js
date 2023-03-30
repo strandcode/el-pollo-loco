@@ -7,6 +7,11 @@ class Coin extends GeneralObject {
   canPosX = 30;
   canPosY = 150;
 
+  offsetX = 20;
+  offsetY = 20;
+  offsetW = -40;
+  offsetH = -40;
+
   constructor() {
     super();
     this.loadCollection('imgPathsComplete', 'complete');

@@ -12,6 +12,11 @@ class GeneralObject {
   speedY = 0;
   accelaration = 1;
 
+  offsetX = 0;
+  offsetY = 0;
+  offsetW = 0;
+  offsetH = 0;
+
   collection = {};
   currentImage;
 
@@ -41,15 +46,46 @@ class GeneralObject {
     } else {
       this.isImageFlipped = false;
       this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+      // this.drawFrames();
+      this.drawOffsetFrames();
+    }
+  }
 
-      // REVIEW Green rectangle
+  drawFrames() {
+    if (!(this instanceof Background)
+      && !(this instanceof Clouds)) {
+
+      if (this instanceof Pepe) {
+        this.ctx.strokeStyle = "red";
+      } else {
+        this.ctx.strokeStyle = "green";
+      }
       this.ctx.beginPath();
       this.ctx.lineWidth = "1";
-      this.ctx.strokeStyle = "green";
       this.ctx.rect(this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
       this.ctx.stroke();
     }
   }
+
+  drawOffsetFrames() {
+    if (!(this instanceof Background)
+      && !(this instanceof Clouds)) {
+
+      if (this instanceof Pepe) {
+        this.ctx.strokeStyle = "rebeccapurple";
+      } else {
+        this.ctx.strokeStyle = "green";
+      }
+      this.ctx.beginPath();
+      this.ctx.lineWidth = "1";
+      this.ctx.strokeRect(
+        (this.canPosX + this.offsetX),
+        (this.canPosY + this.offsetY),
+        (this.scaledWidth + this.offsetW),
+        (this.scaledHeight + this.offsetH));
+    }
+  }
+
 
   flipImage() {
     // Speichert das aktuelle Bild mit dessen Eigenschaften   
@@ -72,7 +108,6 @@ class GeneralObject {
   }
 
   applyGravity() {
-
     setInterval(() => {
       if (this.isAboveGround()) {
         this.canPosY -= this.speedY;
@@ -85,6 +120,19 @@ class GeneralObject {
     return this.canPosY < 130;
   }
 
+  // Junus Formel
+  isColliding() {
+    return this.canPosX + this.scaledWidth
+  }
 
+  isColliding(obj) {
+    return (this.canPosX + this.scaledWidth) >= obj.canPosX &&
+      this.canPosX <= (obj.canPosX + obj.scaledWidth)
+    // &&
+    // (this.canPosY + this.offsetY + this.height) >= obj.canPosY &&
+    // (this.canPosY + this.offsetY) <= (obj.canPosY + obj.height) &&
+    // obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+
+  }
 
 }

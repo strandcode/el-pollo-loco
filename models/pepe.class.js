@@ -8,7 +8,10 @@ class Pepe extends GeneralObject {
   canPosY = 130;
   currentImage = 0;
 
-
+  offsetX = 22;
+  offsetY = 110;
+  offsetW = -55;
+  offsetH = -120;
 
   isPepeJumping = false;
   isPepeFlying = false;

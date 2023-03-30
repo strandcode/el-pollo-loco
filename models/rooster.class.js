@@ -7,6 +7,11 @@ class Rooster extends GeneralObject {
   canPosX = 3500;
   canPosY = 220;
 
+  offsetX = 10;
+  offsetY = 30;
+  offsetW = -15;
+  offsetH = -40;
+
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');

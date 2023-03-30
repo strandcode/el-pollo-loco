@@ -17,12 +17,18 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
     this.createChicks(200, 50, 5);
-    setInterval(() => {
-      // console.log(this.pepe.canPosY);
-    }, 1000);
+
+    this.checkCollisions();
   }
 
-
+  checkCollisions() {
+    setInterval(() => {
+      // this.level1.enemies.forEach((enemy) => {  });
+      if (this.pepe.isColliding(this.chick)) {
+        console.log('Hühnchen kollidiert mit Pepe!');
+      }
+    }, 1000);
+  }
 
 
   // NOTE Diese Funktion generiert immer das aktuelle Bild des jeweiligen World-Objectes in einer fortlaufenden Schleife
@@ -31,7 +37,8 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.pepe.worldFocus, 0);
     this.background.drawBackground();
-    this.chicks.forEach(chick => chick.draw());
+    this.chick.draw();
+    // this.chicks.forEach(chick => chick.draw());
     this.hen.draw();
     this.rooster.draw();
     this.coin.draw();

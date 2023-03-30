@@ -8,7 +8,7 @@ const world = new World();
 
 world.chicks.forEach(chick => chick.walkLeft());
 setTimeout(() => { world.hen.walkLeft(); }, 4500);
-setTimeout(() => { world.rooster.walkLeft(); }, 6000);
+// setTimeout(() => { world.rooster.walkLeft(); }, 6000);
 
 
 function startGame() {
