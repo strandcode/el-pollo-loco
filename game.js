@@ -29,20 +29,32 @@ let isArrowDownPressed = false;
 let isKeyDPressed = false;
 let isKeyEscapePressed = false;
 
+let walkingIntervalId = null;
+
 
 function controlPepe() {
   window.addEventListener('keydown', (event) => {
+
     if (event.code == "ArrowRight") {
       isArrowRightPressed = true;
       world.pepe.isPepeWalking = true;
+
+      if (!world.pepe.isOffGround) {
+        world.pepe.animateWalk();
+      }
     }
     if (event.code == "ArrowLeft") {
       isArrowLeftPressed = true;
       world.pepe.isImageFlipped = true;
       world.pepe.isPepeWalking = true;
+
+      if (!world.pepe.isOffGround) {
+        world.pepe.animateWalk();
+      }
     }
     if (event.code == "Space") {
       isSpacePressed = true;
+      world.pepe.stopWalk();
     }
   });
 
@@ -50,12 +62,14 @@ function controlPepe() {
     if (event.code == "ArrowRight") {
       isArrowRightPressed = false;
       world.pepe.isPepeWalking = false;
+      world.pepe.stopWalk();
 
     }
     if (event.code == "ArrowLeft") {
       isArrowLeftPressed = false;
       world.pepe.isImageFlipped = false;
       world.pepe.isPepeWalking = false;
+      world.pepe.stopWalk();
     }
     if (event.code == "Space") {
       isSpacePressed = false;
@@ -63,6 +77,7 @@ function controlPepe() {
   });
 
   // Intervall of 10ms is the keypressed reaction time
+
   setInterval(() => {
     if (isArrowRightPressed) {
       world.pepe.moveRight();

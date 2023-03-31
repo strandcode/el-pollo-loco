@@ -4,18 +4,14 @@ class Coin extends GeneralObject {
   scaleFactor = 0.25;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;;
-  canPosX = 30;
+  canPosX = 230;
   canPosY = 150;
-
-  offsetX = 20;
-  offsetY = 20;
-  offsetW = -40;
-  offsetH = -40;
 
   constructor() {
     super();
     this.loadCollection('imgPathsComplete', 'complete');
     this.img = this.collection.complete[0];
+    this.animateCoin();
   }
 
 
@@ -35,6 +31,14 @@ class Coin extends GeneralObject {
 
   //   this.coinQuartet = coinQuartet;
   // }
+
+  animateCoin() {
+    setInterval(() => {
+      this.currentImage = this.currentImage % this.collection.complete.length;
+      this.img = this.collection.complete[this.currentImage];
+      this.currentImage++;
+    }, 1000);
+  }
 
   imgPathsComplete = [
     'img/8_coin/coin_1.png',

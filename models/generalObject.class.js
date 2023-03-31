@@ -18,7 +18,7 @@ class GeneralObject {
   offsetH = 0;
 
   collection = {};
-  currentImage;
+  currentImage = 0;
 
   energy = 100;
   isDead = false;
@@ -123,6 +123,17 @@ class GeneralObject {
     return this.canPosY < 130;
   }
 
+  checkIsOffGround() {
+    setInterval(() => {
+      if (this.canPosY >= 125) {
+        this.isOffGround = false;
+      }
+    }, 100);
+  }
+
+
+
+
   // world.pepe.isColliding(enemy)
   isColliding(movableObject) {
     let characterX = this.canPosX + this.offsetX;
@@ -144,21 +155,10 @@ class GeneralObject {
 
   }
 
-  isAttacked() {
-    this.energy -= 20; // 5
-    console.log('Pepe is attacked! Energy: ' + this.energy);
-    if (this.energy <= 0) {
-      this.energy = 0;
-      this.isDying();
-    }
-  }
 
-  isDying() {
-    if (!this.isDead) {
-      this.animateDying();
-      console.log('Pepe is dead');
-      this.isDead = true;
-    }
+
+  playAudio(sound) {
+    this[sound].play();
   }
 
 }

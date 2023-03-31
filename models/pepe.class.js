@@ -13,12 +13,12 @@ class Pepe extends GeneralObject {
   offsetW = -55;
   offsetH = -120;
 
-  isPepeJumping = false;
-  isPepeFlying = false;
-  isPepeWalking = false;
+  isOffGround = false;
+  isWalking = false;
 
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
   walking_sound = new Audio('audio/running_clipped.mp3');
+  get_hurt_sound = new Audio('audio/getHurt.mp3');
 
   worldFocus = 0; // Verankerung Pepe und worldFocus
 
@@ -32,17 +32,13 @@ class Pepe extends GeneralObject {
     this.loadCollection('imgPathsDead', 'dying');
     this.img = this.collection.idle[0];
     this.applyGravity();
-    this.checkPepeOnGround();
+    this.checkIsOffGround();
   }
-
 
   moveRight() {
     if (this.canPosX >= 100 && this.canPosX < 4200) {
       this.canPosX += 8;
       this.worldFocus += -8;
-      if (!this.isPepeFlying || !this.isPepeJumping) {
-        this.animateWalk();
-      }
     }
   }
 
@@ -51,49 +47,38 @@ class Pepe extends GeneralObject {
     if (this.canPosX > 110 && this.canPosX < 4300) {
       this.canPosX += -8;
       this.worldFocus += 8;
-      if (!this.isPepeFlying || !this.isPepeJumping) {
-        this.animateWalk();
-      }
     }
   }
 
   animateWalk() {
-    if (!this.isPepeFlying || !this.isPepeJumping) {
-      if (this.currentImage <= 0) {
-        this.currentImage = this.collection.walk.length;
-      }
-      if (this.currentImage >= this.collection.walk.length) {
-        this.currentImage = 0;
-      }
+    if (walkingIntervalId === null) {
+      // this.playAudio('walking_sound');
+      this.img = this.collection.walk[1];
 
-      // Setzt über das currentImage das Bild aus der walk serie
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage++;
-      this.walking_sound.play();
+      walkingIntervalId = setInterval(() => {
+        if (this.currentImage <= 0) {
+          this.currentImage = this.collection.walk.length;
+        }
+        if (this.currentImage >= this.collection.walk.length) {
+          this.currentImage = 0;
+        }
+        // Setzt über das currentImage das Bild aus der walk serie
+        this.img = this.collection.walk[this.currentImage];
+        this.currentImage++;
+      }, 100);
     }
   }
 
-  animateDying() {
-    let intervalCount = 0;
-    let hadLastJump = false;
-
-    let interval = setInterval(() => {
-      this.img = this.collection.dying[intervalCount];
-      intervalCount++;
-      this.jump();
-      if (!hadLastJump) {
-        hadLastJump = true;
-      }
-      if (intervalCount == this.collection.dying.length) {
-        clearInterval(interval);
-      }
-    }, 1000);
+  stopWalk() {
+    // Stoppt das Intervall nur, wenn es läuft
+    if (walkingIntervalId !== null) {
+      clearInterval(walkingIntervalId);
+      walkingIntervalId = null;
+    }
   }
 
-
   jump() {
-    this.isPepeJumping = true;
-    this.isPepeFlying = true;
+    this.isOffGround = true;
     this.canPosY -= this.speedY;
     this.speedY = 10;
     if (this.canPosY < -50) {
@@ -101,14 +86,72 @@ class Pepe extends GeneralObject {
     }
   }
 
-  // TODO noch irgendwo mit einbauen?
-  checkPepeOnGround() {
-    setInterval(() => {
-      if (this.canPosY >= 125) {
-        this.isPepeJumping = false;
-        this.isPepeFlying = false;
+  isAttacked() {
+    if (!this.isDead) {
+      this.animateGetHurt();
+      this.energy -= 20; // 5
+      console.log('Pepe is attacked! Energy: ' + this.energy);
+      if (this.energy <= 0) {
+        this.energy = 0;
+        this.isDying();
+      }
+    }
+  }
+
+
+  animateGetHurt() {
+    this.currentImage = 0;
+    // this.playAudio('get_hurt_sound');
+    let interval = setInterval(() => {
+      this.img = this.collection.hurt[this.currentImage];
+      this.currentImage++;
+      if (this.currentImage > this.collection.hurt.length) {
+        clearInterval(interval);
+        this.img = this.collection.walk[0];
       }
     }, 100);
+  }
+
+  isDying() {
+    if (!this.isDead) {
+      this.animateDying();
+      console.log('Pepe is dead');
+      this.isDead = true;
+    }
+  }
+
+
+  animateDying() {
+    this.currentImage = 0;
+    this.energy = 200;
+    this.isDead = false;
+    let interval = setInterval(() => {
+      this.jump();
+      this.img = this.collection.dying[this.currentImage];
+      this.currentImage++;
+      console.log(this.currentImage);
+      if (this.currentImage > this.collection.dying.length) {
+        clearInterval(interval);
+        this.img = this.collection.hurt[2];
+        this.isDead = true;
+        setTimeout(() => {
+          console.log('Game over!');
+        }, 1000);
+      }
+    }, 600);
+  }
+
+
+
+
+
+
+
+
+
+
+  isCollectingCoin() {
+    console.log('Coin was collected');
   }
 
 
@@ -176,6 +219,6 @@ class Pepe extends GeneralObject {
     'img/2_character_pepe/5_dead/D-54.png',
     'img/2_character_pepe/5_dead/D-55.png',
     'img/2_character_pepe/5_dead/D-56.png',
-    'img/2_character_pepe/5_dead/D-57.png',
+    // 'img/2_character_pepe/5_dead/D-57.png',
   ];
 }

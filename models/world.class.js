@@ -10,6 +10,7 @@ class World {
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
+  coins = [this.coin];
   enemies = [this.chick, this.hen, this.rooster];
   // TODO statusbar
 
@@ -25,13 +26,21 @@ class World {
   checkCollisions() {
     setInterval(() => {
       // this.level1.enemies.forEach((enemy) => {  });
-
       this.enemies.forEach((enemy) => {
         if (this.pepe.isColliding(enemy)) {
           this.pepe.isAttacked();
         }
       });
-    }, 1000);
+
+      this.coins.forEach((coin) => {
+        if (this.pepe.isColliding(coin)) {
+          this.pepe.isCollectingCoin();
+          console.log('Pepe is collecting coin');
+        }
+      });
+
+
+    }, 200);
   }
 
 
@@ -41,8 +50,8 @@ class World {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.pepe.worldFocus, 0);
     this.background.drawBackground();
-    this.chick.draw();
-    // this.chicks.forEach(chick => chick.draw());
+    // this.chick.draw();
+    this.chicks.forEach(chick => chick.draw());
     this.hen.draw();
     this.rooster.draw();
     this.coin.draw();
