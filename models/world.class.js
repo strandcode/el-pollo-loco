@@ -4,12 +4,18 @@ class World {
   background = new Background();  // TODO load layers
   clouds = new Clouds();
   pepe = new Pepe();
+  statusBar = new StatusBar();
+  statusBarHealth = new StatusBarHealth();
+  statusBarCoin = new StatusBarCoin();
+  statusBarBottle = new StatusBarBottle();
   chick = new Chick();
   chicks = [];
   hen = new Hen();
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
+
+  bottles = [this.bottle];
   coins = [this.coin];
   enemies = [this.chick, this.hen, this.rooster];
   // TODO statusbar
@@ -19,16 +25,18 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
     this.createChicks(200, 50, 5);
-
-    this.checkCollisions();
+    this.statusBarHealth.show(100);
+    this.checkPepesCollisions();
   }
 
-  checkCollisions() {
+
+  checkPepesCollisions() {
     setInterval(() => {
       // this.level1.enemies.forEach((enemy) => {  });
       this.enemies.forEach((enemy) => {
         if (this.pepe.isColliding(enemy)) {
           this.pepe.isAttacked();
+          this.statusBarHealth.show(this.pepe.energy);
         }
       });
 
@@ -38,10 +46,21 @@ class World {
           console.log('Pepe is collecting coin');
         }
       });
+      this.bottles.forEach((bottle) => {
+        if (this.pepe.isColliding(bottle)) {
+          this.pepe.isCollectingBottle();
+          console.log('Pepe is collecting bottle');
+        }
+      });
 
 
     }, 200);
   }
+
+
+
+
+
 
 
   // NOTE Diese Funktion generiert immer das aktuelle Bild des jeweiligen World-Objectes in einer fortlaufenden Schleife
@@ -59,6 +78,10 @@ class World {
     this.pepe.draw();
     this.clouds.draw();
     this.ctx.translate(-this.pepe.worldFocus, 0);
+
+    this.statusBarHealth.draw();
+    this.statusBarBottle.draw();
+    this.statusBarCoin.draw();
 
     let self = this;
     requestAnimationFrame(function () {

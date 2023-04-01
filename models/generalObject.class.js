@@ -20,7 +20,7 @@ class GeneralObject {
   collection = {};
   currentImage = 0;
 
-  energy = 100;
+
   isDead = false;
 
   // NOTE Setzt den Status, ob das currentImage gedreht ist.
@@ -56,7 +56,8 @@ class GeneralObject {
 
   drawFrames() {
     if (!(this instanceof Background)
-      && !(this instanceof Clouds)) {
+      && !(this instanceof Clouds)
+      && !(this instanceof StatusBar)) {
 
       if (this instanceof Pepe) {
         this.ctx.strokeStyle = "red";
@@ -72,7 +73,8 @@ class GeneralObject {
 
   drawOffsetFrames() {
     if (!(this instanceof Background)
-      && !(this instanceof Clouds)) {
+      && !(this instanceof Clouds)
+      && !(this instanceof StatusBar)) {
 
       if (this instanceof Pepe) {
         this.ctx.strokeStyle = "rebeccapurple";

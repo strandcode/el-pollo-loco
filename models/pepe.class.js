@@ -16,6 +16,11 @@ class Pepe extends GeneralObject {
   isOffGround = false;
   isWalking = false;
 
+  energy = 100;
+
+  health = new StatusBarHealth();
+
+
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
   walking_sound = new Audio('audio/running_clipped.mp3');
   get_hurt_sound = new Audio('audio/getHurt.mp3');
@@ -33,6 +38,7 @@ class Pepe extends GeneralObject {
     this.img = this.collection.idle[0];
     this.applyGravity();
     this.checkIsOffGround();
+    console.log(this.health);
   }
 
   moveRight() {
@@ -89,7 +95,7 @@ class Pepe extends GeneralObject {
   isAttacked() {
     if (!this.isDead) {
       this.animateGetHurt();
-      this.energy -= 20; // 5
+      this.energy -= 5; // 5
       console.log('Pepe is attacked! Energy: ' + this.energy);
       if (this.energy <= 0) {
         this.energy = 0;
@@ -97,6 +103,8 @@ class Pepe extends GeneralObject {
       }
     }
   }
+
+
 
 
   animateGetHurt() {
@@ -117,13 +125,13 @@ class Pepe extends GeneralObject {
       this.animateDying();
       console.log('Pepe is dead');
       this.isDead = true;
+      this.health.show(0);
     }
   }
 
 
   animateDying() {
     this.currentImage = 0;
-    this.energy = 200;
     this.isDead = false;
     let interval = setInterval(() => {
       this.jump();
