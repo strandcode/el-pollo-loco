@@ -15,8 +15,10 @@ class World {
   coin = new Coin();
   bottle = new Bottle();
 
-  bottles = [this.bottle];
-  coins = [this.coin];
+
+
+  bottles = this.bottle.bottles;
+  coins = this.coin.coins;
   enemies = [this.chick, this.hen, this.rooster];
   // TODO statusbar
 
@@ -27,29 +29,68 @@ class World {
     this.createChicks(200, 50, 5);
     this.statusBarHealth.show(100);
     this.checkPepesCollisions();
+    this.bottle.createBottles(200, 200, 10);
+    this.coin.createCoins(200, 200, 10);
+    console.log(this.coins);
   }
+
+
+
+
+
+  createChicks(startX, spreadX, quantity) {
+    let chicks = [];
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newChick = new Chick();
+      newChick.canPosX = 0;
+      newChick.canPosX += startX + startSpreadX;
+      startSpreadX += spreadX;
+      chicks.push(newChick);
+    }
+    this.chicks = chicks;
+  }
+
 
 
   checkPepesCollisions() {
     setInterval(() => {
-      // this.level1.enemies.forEach((enemy) => {  });
+      // this.level1.enemies.forEach((enemy) => { });
       this.enemies.forEach((enemy) => {
-        if (this.pepe.isColliding(enemy)) {
-          this.pepe.isAttacked();
-          this.statusBarHealth.show(this.pepe.energy);
+        if (this.pepe.isColliding(enemy) && enemy.isAlive) {
+          if (!this.pepe.isFlying) {
+            this.pepe.isAttacked();
+            this.statusBarHealth.show(this.pepe.energyLevel);
+          } else {
+            console.log('Enemy wird platt getreten');
+            enemy.isAlive = false;
+            console.log(enemy);
+            enemy.img = enemy.collection.dead[0];
+
+            // enemy.isDead();
+          }
         }
       });
 
       this.coins.forEach((coin) => {
         if (this.pepe.isColliding(coin)) {
           this.pepe.isCollectingCoin();
-          console.log('Pepe is collecting coin');
+          this.statusBarCoin.show(this.pepe.coinLevel);
+          console.log(coin.ID);
+
+          const coinIndex = this.coins.findIndex((b) => b.ID === coin.ID);
+          this.coins.splice(coinIndex, 1);
         }
       });
+
       this.bottles.forEach((bottle) => {
         if (this.pepe.isColliding(bottle)) {
           this.pepe.isCollectingBottle();
-          console.log('Pepe is collecting bottle');
+          this.statusBarBottle.show(this.pepe.bottleLevel);
+          console.log(bottle.ID);
+
+          const bottleIndex = this.bottles.findIndex((b) => b.ID === bottle.ID);
+          this.bottles.splice(bottleIndex, 1);
         }
       });
 
@@ -68,13 +109,13 @@ class World {
   drawWorld() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.translate(this.pepe.worldFocus, 0);
+
     this.background.drawBackground();
-    // this.chick.draw();
     this.chicks.forEach(chick => chick.draw());
+    this.bottle.bottles.forEach(bottle => bottle.draw());
+    this.coin.coins.forEach(coin => coin.draw());
     this.hen.draw();
     this.rooster.draw();
-    this.coin.draw();
-    this.bottle.draw();
     this.pepe.draw();
     this.clouds.draw();
     this.ctx.translate(-this.pepe.worldFocus, 0);
@@ -90,18 +131,7 @@ class World {
     });
   }
 
-  createChicks(startX, spreadX, quantity) {
-    let chicks = [];
-    let startSpreadX = 0;
-    for (let i = 0; i < quantity; i++) {
-      let newChick = new Chick();
-      newChick.canPosX = 0;
-      newChick.canPosX += startX + startSpreadX;
-      startSpreadX += spreadX;
-      chicks.push(newChick);
-    }
-    this.chicks = chicks;
-  }
+
 
   // TODO Funktionen zusammenfassen
   // drawCharacterToDisplay(gameCharacter) {

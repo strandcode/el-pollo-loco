@@ -4,13 +4,16 @@ class Bottle extends GeneralObject {
   scaleFactor = 0.18;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;;
-  canPosX = 30;
+  canPosX = 230;
   canPosY = 350;
 
   offsetX = 25;
   offsetY = 0;
-  offsetW = -10;
+  offsetW = -30;
   offsetH = 0;
+
+  ID;
+  bottles = [];
 
   constructor() {
     super();
@@ -18,6 +21,22 @@ class Bottle extends GeneralObject {
     this.loadCollection('imgPathsOnGround', 'onGround');
     this.img = this.collection.onGround[0];
   }
+
+  createBottles(startX, spreadX, quantity) {
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newBottle = new Bottle();
+      newBottle.canPosX = 0;
+      newBottle.ID = 'bottle-' + i;
+      newBottle.img = this.collection.onGround[1];
+      newBottle.canPosX += startX + startSpreadX;
+      startSpreadX += spreadX;
+      this.bottles.push(newBottle);
+    }
+  }
+
+
+
 
   imgPathsComplete = [
     'img/6_salsa_bottle/salsa_bottle.png'

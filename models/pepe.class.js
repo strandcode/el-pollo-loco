@@ -13,12 +13,12 @@ class Pepe extends GeneralObject {
   offsetW = -55;
   offsetH = -120;
 
-  isOffGround = false;
+  isFlying = false;
   isWalking = false;
 
-  energy = 100;
-
-  health = new StatusBarHealth();
+  energyLevel = 100;
+  bottleLevel = 0;
+  coinLevel = 0;
 
 
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
@@ -38,7 +38,6 @@ class Pepe extends GeneralObject {
     this.img = this.collection.idle[0];
     this.applyGravity();
     this.checkIsOffGround();
-    console.log(this.health);
   }
 
   moveRight() {
@@ -84,7 +83,7 @@ class Pepe extends GeneralObject {
   }
 
   jump() {
-    this.isOffGround = true;
+    this.isFlying = true;
     this.canPosY -= this.speedY;
     this.speedY = 10;
     if (this.canPosY < -50) {
@@ -93,12 +92,12 @@ class Pepe extends GeneralObject {
   }
 
   isAttacked() {
-    if (!this.isDead) {
+    if (this.isAlive) {
       this.animateGetHurt();
-      this.energy -= 5; // 5
-      console.log('Pepe is attacked! Energy: ' + this.energy);
-      if (this.energy <= 0) {
-        this.energy = 0;
+      this.energyLevel -= 5; // 5
+      console.log('Pepe is attacked! Energy: ' + this.energyLevel);
+      if (this.energyLevel <= 0) {
+        this.energyLevel = 0;
         this.isDying();
       }
     }
@@ -121,18 +120,17 @@ class Pepe extends GeneralObject {
   }
 
   isDying() {
-    if (!this.isDead) {
+    if (this.isAlive) {
       this.animateDying();
       console.log('Pepe is dead');
-      this.isDead = true;
-      this.health.show(0);
+      this.isAlive = false;
     }
   }
 
 
   animateDying() {
     this.currentImage = 0;
-    this.isDead = false;
+    this.isAlive = false;
     let interval = setInterval(() => {
       this.jump();
       this.img = this.collection.dying[this.currentImage];
@@ -141,7 +139,7 @@ class Pepe extends GeneralObject {
       if (this.currentImage > this.collection.dying.length) {
         clearInterval(interval);
         this.img = this.collection.hurt[2];
-        this.isDead = true;
+        this.isAlive = false;
         setTimeout(() => {
           console.log('Game over!');
         }, 1000);
@@ -151,15 +149,19 @@ class Pepe extends GeneralObject {
 
 
 
-
-
-
-
-
+  isCollectingBottle() {
+    if (this.isAlive) {
+      // this.animateCollectingCoin();
+      this.bottleLevel += 5; // 5
+    }
+  }
 
 
   isCollectingCoin() {
-    console.log('Coin was collected');
+    if (this.isAlive) {
+      // this.animateCollectingCoin();
+      this.coinLevel += 5; // 5
+    }
   }
 
 

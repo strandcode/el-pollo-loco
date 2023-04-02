@@ -21,7 +21,7 @@ class GeneralObject {
   currentImage = 0;
 
 
-  isDead = false;
+  isAlive = true;
 
   // NOTE Setzt den Status, ob das currentImage gedreht ist.
   isImageFlipped = false;
@@ -52,6 +52,19 @@ class GeneralObject {
       // this.drawFrames();
       this.drawOffsetFrames();
     }
+  }
+
+  move(x, y) {
+    this.canPosX = x;
+    this.canPosY = y;
+  }
+
+  moveX(x) {
+    this.canPosX = x;
+  }
+
+  moveY(y) {
+    this.canPosY = y;
   }
 
   drawFrames() {
@@ -128,7 +141,7 @@ class GeneralObject {
   checkIsOffGround() {
     setInterval(() => {
       if (this.canPosY >= 125) {
-        this.isOffGround = false;
+        this.isFlying = false;
       }
     }, 100);
   }
@@ -141,21 +154,33 @@ class GeneralObject {
     let characterX = this.canPosX + this.offsetX;
     let characterY = this.canPosY + this.offsetY;
     let characterW = this.scaledWidth + this.offsetW;
-    let characterH = this.height + this.offsetH;
+    let characterH = this.scaledHeight + this.offsetH;
+
     let movableObjectX = movableObject.canPosX + movableObject.offsetX;
     let movableObjectY = movableObject.canPosY + movableObject.offsetY;
     let movableObjectW = movableObject.scaledWidth + movableObject.offsetW;
-    let movableObjectH = movableObject.height + movableObject.offsetH;
+    let movableObjectH = movableObject.scaledHeight + movableObject.offsetH;
 
-    return characterX + characterW >= movableObjectX &&
-      characterX <= movableObjectX + movableObjectW
-    // &&
-    // characterY + characterH >= movableObjectY &&
-    // characterY <= movableObjectY + movableObjectH
+    return characterX + characterW >= movableObjectX
+      && characterX <= movableObjectX + movableObjectW
+      && characterY + characterH >= movableObjectY
+      && characterY <= movableObjectY + movableObjectH
     // && movableObject.onCollisionCourse;
     // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
 
   }
+
+  //  NOTE Diese Funktion isColliding(movableObject) überprüft, ob das Objekt, auf dem diese Funktion aufgerufen wird, mit einem anderen Objekt kollidiert, das als Parameter movableObject übergeben wird. Die Funktion gibt einen booleschen Wert zurück, der angibt, ob eine Kollision vorliegt oder nicht.
+
+  // Um festzustellen, ob eine Kollision vorliegt, werden die Position und Größe des Objekts, auf dem die Funktion aufgerufen wird, sowie die Position und Größe des übergebenen movableObject miteinander verglichen.
+
+  // Zuerst werden die Koordinaten des Objekts, auf dem die Funktion aufgerufen wird, unter Berücksichtigung der Verschiebung (offset) berechnet. Dann wird die Breite und Höhe des Objekts unter Berücksichtigung der Verschiebung und Skalierung (scaledWidth) berechnet.
+
+  // Dann werden die Koordinaten des movableObject berechnet, ebenfalls unter Berücksichtigung der Verschiebung, und die Breite und Höhe des movableObject unter Berücksichtigung der Verschiebung und Skalierung berechnet.
+
+  // Schließlich werden die Positionen und Größen der beiden Objekte miteinander verglichen, um festzustellen, ob eine Kollision vorliegt. Die Bedingungen in der return-Anweisung überprüfen, ob die rechte Seite des Objekts auf der linken Seite des movableObject liegt und ob die linke Seite des Objekts auf der rechten Seite des movableObject liegt. Wenn beide Bedingungen erfüllt sind, liegt eine Kollision vor.
+
+  // Die auskommentierten Bedingungen, die die vertikale Kollision prüfen, können optional aktiviert werden, um auch vertikale Kollisionen zu berücksichtigen. Außerdem gibt es eine weitere Bedingung, die ebenfalls auskommentiert ist, um sicherzustellen, dass das Objekt nur dann kollidiert, wenn es in die gleiche Richtung wie das movableObject bewegt wird. Dies könnte nützlich sein, wenn man beispielsweise auf einem Objekt stehen kann.
 
 
 

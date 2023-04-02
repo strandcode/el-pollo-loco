@@ -7,6 +7,10 @@ class Coin extends GeneralObject {
   canPosX = 230;
   canPosY = 150;
 
+  ID;
+  coins = [];
+
+
   constructor() {
     super();
     this.loadCollection('imgPathsComplete', 'complete');
@@ -14,6 +18,18 @@ class Coin extends GeneralObject {
     this.animateCoin();
   }
 
+  createCoins(startX, spreadX, quantity) {
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newCoin = new Coin();
+      newCoin.canPosX = 0;
+      newCoin.ID = 'coin-' + i;
+      newCoin.img = this.collection.complete[0];
+      newCoin.canPosX += startX + startSpreadX;
+      startSpreadX += spreadX;
+      this.coins.push(newCoin);
+    }
+  }
 
 
 
