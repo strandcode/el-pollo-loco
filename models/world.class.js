@@ -14,13 +14,13 @@ class World {
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
+  throwableObject = new ThrowableObject();
 
 
 
   bottles = this.bottle.bottles;
   coins = this.coin.coins;
   enemies = [this.chick, this.hen, this.rooster];
-  // TODO statusbar
 
   constructor() {
     this.canvas = canvas;
@@ -32,6 +32,7 @@ class World {
     this.bottle.createBottles(200, 200, 10);
     this.coin.createCoins(200, 200, 10);
     console.log(this.coins);
+    console.log(this.throwableObject);
   }
 
 
@@ -56,21 +57,22 @@ class World {
   checkPepesCollisions() {
     setInterval(() => {
       // this.level1.enemies.forEach((enemy) => { });
-      this.enemies.forEach((enemy) => {
-        if (this.pepe.isColliding(enemy) && enemy.isAlive) {
-          if (!this.pepe.isFlying) {
-            this.pepe.isAttacked();
-            this.statusBarHealth.show(this.pepe.energyLevel);
-          } else {
-            console.log('Enemy wird platt getreten');
-            enemy.isAlive = false;
-            console.log(enemy);
-            enemy.img = enemy.collection.dead[0];
 
-            // enemy.isDead();
-          }
-        }
-      });
+      // this.enemies.forEach((enemy) => {
+      //   if (this.pepe.isColliding(enemy) && enemy.isAlive) {
+      //     if (!this.pepe.isFlying) {
+      //       this.pepe.isAttacked();
+      //       this.statusBarHealth.show(this.pepe.energyLevel);
+      //     } else {
+      //       console.log('Enemy wird platt getreten');
+      //       enemy.isAlive = false;
+      //       console.log(enemy);
+      //       enemy.img = enemy.collection.dead[0];
+
+      //       // enemy.isDead();
+      //     }
+      //   }
+      // });
 
       this.coins.forEach((coin) => {
         if (this.pepe.isColliding(coin)) {
@@ -117,6 +119,7 @@ class World {
     this.hen.draw();
     this.rooster.draw();
     this.pepe.draw();
+    this.throwableObject.draw();
     this.clouds.draw();
     this.ctx.translate(-this.pepe.worldFocus, 0);
 

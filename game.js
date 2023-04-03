@@ -34,7 +34,6 @@ let walkingIntervalId = null;
 
 function controlPepe() {
   window.addEventListener('keydown', (event) => {
-
     if (event.code == "ArrowRight") {
       isArrowRightPressed = true;
       world.pepe.isPepeWalking = true;
@@ -56,6 +55,12 @@ function controlPepe() {
       isSpacePressed = true;
       world.pepe.stopWalk();
     }
+    if (event.code == "KeyD") {
+      isKeyDPressed = true;
+      world.throwableObject.throw((world.pepe.canPosX) + 100, 250);
+    }
+
+
   });
 
   window.addEventListener('keyup', (event) => {
@@ -73,6 +78,9 @@ function controlPepe() {
     }
     if (event.code == "Space") {
       isSpacePressed = false;
+    }
+    if (event.code == "KeyD") {
+      isKeyDPressed = false;
     }
   });
 
