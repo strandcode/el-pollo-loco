@@ -5,7 +5,7 @@ class ThrowableObject extends GeneralObject {
   scaleFactor = 0.18;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = this.originHeight * this.scaleFactor;
-  canPosX = 430;
+  canPosX = -100;
   canPosY = 100;
 
   offsetX = 0;
@@ -13,6 +13,7 @@ class ThrowableObject extends GeneralObject {
   offsetW = 0;
   offsetH = 0;
 
+  bottleFlight;
   animateBottleRotationInterval;
 
   constructor() {
@@ -27,16 +28,17 @@ class ThrowableObject extends GeneralObject {
     this.canPosX = x;
     this.canPosY = y;
     this.speedY = 12;
-    let bottleFlight = setInterval(() => {
+    this.bottleFlight = setInterval(() => {
       this.canPosX += 10;
       this.canPosY -= this.speedY;
       this.speedY -= this.accelaration;
-      // console.log(this.canPosY);
       if (this.canPosY >= 390) {
-        console.log(this.canPosY);
-        clearInterval(bottleFlight);
+        clearInterval(this.bottleFlight);
         clearInterval(this.animateBottleRotationInterval);
         this.img = this.collection.splash[0];
+        setTimeout(() => {
+          this.canPosY = 2000;
+        }, 500);
       }
     }, 50);
   }
@@ -49,10 +51,11 @@ class ThrowableObject extends GeneralObject {
         this.currentImage = 0;
       }
       this.img = this.collection.rotation[this.currentImage];
-      console.log(this.currentImage);
       this.currentImage++;
     }, 100);
   }
+
+
 
 
 

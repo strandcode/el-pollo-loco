@@ -8,71 +8,112 @@ class World {
   statusBarHealth = new StatusBarHealth();
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
+  statusBarRooster = new StatusBarRooster();
   chick = new Chick();
-  chicks = [];
   hen = new Hen();
   rooster = new Rooster();
   coin = new Coin();
   bottle = new Bottle();
   throwableObject = new ThrowableObject();
 
-
-
+  // Arrays für 
   bottles = this.bottle.bottles;
   coins = this.coin.coins;
+
+  chicks = this.chick.chicks;
+  hens = this.hen.hens;
+
   enemies = [this.chick, this.hen, this.rooster];
+  projectiles = [];
 
   constructor() {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
-    this.createChicks(200, 50, 5);
+
     this.statusBarHealth.show(100);
     this.checkPepesCollisions();
-    this.bottle.createBottles(200, 200, 10);
+    this.checkEnemyCollisions();
+
     this.coin.createCoins(200, 200, 10);
-    console.log(this.coins);
-    console.log(this.throwableObject);
+    this.bottle.createBottles(200, 100, 25);
+    this.chick.createChicks(1500, 100, 10);
+    this.hen.createHens(1000, 200, 5);
+    this.activateEnemies();
+  }
+
+  activateEnemies() {
+    this.chicks.forEach(chick => { chick.walkLeft(); });
+    this.hens.forEach(hen => { hen.walkLeft(); });
   }
 
 
 
+  checkEnemyCollisions() {
+    setInterval(() => {
+      this.chicks.forEach((chick) => {
+        if (chick.isColliding(this.throwableObject) && chick.isAlive) {
+          console.log(chick.ID + ' wurde getroffen');
+          chick.isAlive = false;
+          chick.stopWalkLeft();
+          chick.img = chick.collection.dead[0];
+        }
+      });
 
+      this.hens.forEach((hen) => {
+        if (hen.isColliding(this.throwableObject) && hen.isAlive) {
+          console.log(hen.ID + ' wurde getroffen');
+          hen.isAlive = false;
+          hen.stopWalkLeft();
+          hen.img = hen.collection.dead[0];
+        }
+      });
 
-  createChicks(startX, spreadX, quantity) {
-    let chicks = [];
-    let startSpreadX = 0;
-    for (let i = 0; i < quantity; i++) {
-      let newChick = new Chick();
-      newChick.canPosX = 0;
-      newChick.canPosX += startX + startSpreadX;
-      startSpreadX += spreadX;
-      chicks.push(newChick);
-    }
-    this.chicks = chicks;
+      if (this.rooster.isColliding(this.throwableObject) && this.rooster.isAlive) {
+        console.log('Rooster wurde getroffen');
+        this.rooster.isAttacked();
+      }
+
+    }, 200);
   }
-
 
 
   checkPepesCollisions() {
     setInterval(() => {
       // this.level1.enemies.forEach((enemy) => { });
 
-      // this.enemies.forEach((enemy) => {
-      //   if (this.pepe.isColliding(enemy) && enemy.isAlive) {
-      //     if (!this.pepe.isFlying) {
-      //       this.pepe.isAttacked();
-      //       this.statusBarHealth.show(this.pepe.energyLevel);
-      //     } else {
-      //       console.log('Enemy wird platt getreten');
-      //       enemy.isAlive = false;
-      //       console.log(enemy);
-      //       enemy.img = enemy.collection.dead[0];
+      this.chicks.forEach((chick) => {
+        if (this.pepe.isColliding(chick) && chick.isAlive) {
+          if (!this.pepe.isFlying) {
+            this.pepe.isAttacked();
+            this.pepe.energyLevel -= 5;
+            this.statusBarHealth.show(this.pepe.energyLevel);
+          } else {
+            console.log(chick.ID + ' ist platt');
+            chick.isAlive = false;
+            chick.stopWalkLeft();
+            chick.img = chick.collection.dead[0];
+          }
+        }
+      });
 
-      //       // enemy.isDead();
-      //     }
-      //   }
-      // });
+      this.hens.forEach((hen) => {
+        if (this.pepe.isColliding(hen) && hen.isAlive) {
+          if (!this.pepe.isFlying) {
+            this.pepe.isAttacked();
+            this.pepe.energyLevel -= 10;
+            this.statusBarHealth.show(this.pepe.energyLevel);
+          } else {
+            console.log(hen.ID + ' ist platt');
+            hen.isAlive = false;
+            hen.stopWalkLeft();
+            hen.img = hen.collection.dead[0];
+          }
+        }
+      });
+
+
+
 
       this.coins.forEach((coin) => {
         if (this.pepe.isColliding(coin)) {
@@ -93,10 +134,9 @@ class World {
 
           const bottleIndex = this.bottles.findIndex((b) => b.ID === bottle.ID);
           this.bottles.splice(bottleIndex, 1);
+          this.projectiles.push(bottle);
         }
       });
-
-
     }, 200);
   }
 
@@ -114,9 +154,9 @@ class World {
 
     this.background.drawBackground();
     this.chicks.forEach(chick => chick.draw());
+    this.hens.forEach(hen => hen.draw());
     this.bottle.bottles.forEach(bottle => bottle.draw());
     this.coin.coins.forEach(coin => coin.draw());
-    this.hen.draw();
     this.rooster.draw();
     this.pepe.draw();
     this.throwableObject.draw();
@@ -126,6 +166,7 @@ class World {
     this.statusBarHealth.draw();
     this.statusBarBottle.draw();
     this.statusBarCoin.draw();
+    this.statusBarRooster.draw();
 
     let self = this;
     requestAnimationFrame(function () {

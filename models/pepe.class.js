@@ -94,7 +94,6 @@ class Pepe extends GeneralObject {
   isAttacked() {
     if (this.isAlive) {
       this.animateGetHurt();
-      this.energyLevel -= 5; // 5
       console.log('Pepe is attacked! Energy: ' + this.energyLevel);
       if (this.energyLevel <= 0) {
         this.energyLevel = 0;

@@ -7,37 +7,50 @@ class Chick extends GeneralObject {
   canPosX = 250;
   canPosY = 380;
 
+  ID;
+  chicks = [];
+
+  walkleftInterval;
+
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.walk[0];
+
   }
 
-  walkLeft() {
-    this.currentImage = 0;
-    setInterval(() => {
-      if (this.currentImage >= this.collection.walk.length) {
-        this.currentImage = 0;
-      }
-      this.img = this.collection.walk[this.currentImage];
-      this.currentImage++;
-      if (this.canPosX < 0) { this.canPosX = 720 }
-      this.canPosX = this.canPosX - 5;
-    }, 200);
-  }
-
+  // TODO Verteilung nach dem Zufallssprinzip
   createChicks(startX, spreadX, quantity) {
-    this.chicks = [];
     let startSpreadX = 0;
     for (let i = 0; i < quantity; i++) {
       let newChick = new Chick();
       newChick.canPosX = 0;
+      newChick.ID = 'chick-' + i;
       newChick.canPosX += startX + startSpreadX;
       startSpreadX += spreadX;
       this.chicks.push(newChick);
     }
   }
+
+  walkLeft() {
+    this.currentImage = 0;
+    this.walkleftInterval = setInterval(() => {
+      if (this.currentImage >= this.collection.walk.length) {
+        this.currentImage = 0;
+      }
+      this.img = this.collection.walk[this.currentImage];
+      this.currentImage++;
+      if (this.canPosX < 0) { this.canPosX = 5000 }
+      this.canPosX = this.canPosX - 5;
+    }, 200);
+  }
+
+  stopWalkLeft() {
+    clearInterval(this.walkleftInterval);
+  }
+
+
 
 
 

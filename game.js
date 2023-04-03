@@ -5,12 +5,6 @@ const keyboard = new Keyboard();
 const world = new World();
 
 
-
-world.chicks.forEach(chick => chick.walkLeft());
-setTimeout(() => { world.hen.walkLeft(); }, 4500);
-// setTimeout(() => { world.rooster.walkLeft(); }, 6000);
-
-
 function startGame() {
   const startScreen = document.querySelector('.start-screen');
   startScreen.classList.add('d-none');
@@ -57,7 +51,12 @@ function controlPepe() {
     }
     if (event.code == "KeyD") {
       isKeyDPressed = true;
-      world.throwableObject.throw((world.pepe.canPosX) + 100, 250);
+      if (world.projectiles.length > 0) {
+        world.throwableObject.throw((world.pepe.canPosX + world.pepe.scaledWidth + world.pepe.offsetW), 250);
+        world.projectiles.splice(0, 1);
+        world.pepe.bottleLevel -= 5;
+        world.statusBarBottle.show(world.pepe.bottleLevel);
+      }
     }
 
 

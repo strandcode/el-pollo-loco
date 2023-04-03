@@ -12,13 +12,15 @@ class Rooster extends GeneralObject {
   offsetW = -15;
   offsetH = -40;
 
+  energyLevel = 100;
+
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsAlert', 'alert');
     this.loadCollection('imgPathsAttack', 'attack');
     this.loadCollection('imgPathsHurt', 'hurt');
-    this.loadCollection('imgPathsDead', 'dead');
+    this.loadCollection('imgPathsDying', 'dying');
     this.img = this.collection.walk[0];
   }
 
@@ -35,6 +37,42 @@ class Rooster extends GeneralObject {
       this.canPosX = this.canPosX - 12;
     }, 200);
   }
+
+  isAttacked() {
+    if (this.isAlive) {
+      // this.animateGetHurt();
+      this.energyLevel -= 20;
+      console.log('Rooster is attacked! Energy: ' + this.energyLevel);
+
+      if (this.energyLevel <= 0) {
+        this.energyLevel = 0;
+
+        this.animateDying();
+      }
+    }
+  }
+
+
+
+  animateDying() {
+    this.currentImage = 0;
+    this.isAlive = false;
+    let interval = setInterval(() => {
+      this.img = this.collection.dying[this.currentImage];
+      this.currentImage++;
+      console.log(this.currentImage);
+      if (this.currentImage > this.collection.dying.length) {
+        clearInterval(interval);
+        this.img = this.collection.dying[2];
+        setTimeout(() => {
+          console.log('You win!!');
+        }, 1000);
+      }
+    }, 300);
+  }
+
+
+
 
   imgPathsWalk = [
     'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -71,7 +109,7 @@ class Rooster extends GeneralObject {
     'img/4_enemie_boss_chicken/4_hurt/G23.png',
   ];
 
-  imgPathsDead = [
+  imgPathsDying = [
     'img/4_enemie_boss_chicken/5_dead/G24.png',
     'img/4_enemie_boss_chicken/5_dead/G25.png',
     'img/4_enemie_boss_chicken/5_dead/G26.png',

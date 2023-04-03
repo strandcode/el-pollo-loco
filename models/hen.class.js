@@ -7,6 +7,11 @@ class Hen extends GeneralObject {
   canPosX = 330;
   canPosY = 375;
 
+  ID;
+  hens = [];
+
+  walkleftInterval;
+
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
@@ -18,19 +23,37 @@ class Hen extends GeneralObject {
     }
   }
 
+  // TODO Verteilung nach dem Zufallssprinzip
+  createHens(startX, spreadX, quantity) {
+    let startSpreadX = 0;
+    for (let i = 0; i < quantity; i++) {
+      let newHen = new Hen();
+      newHen.canPosX = 0;
+      newHen.ID = 'hen-' + i;
+      newHen.canPosX += startX + startSpreadX;
+      startSpreadX += spreadX;
+      this.hens.push(newHen);
+    }
+  }
+
+
+
   walkLeft() {
     this.currentImage = 0;
-    if (this.isAlive) {
-      setInterval(() => {
-        if (this.currentImage >= this.collection.walk.length) {
-          this.currentImage = 0;
-        }
-        this.img = this.collection.walk[this.currentImage];
-        this.currentImage++;
-        if (this.canPosX < 0) { this.canPosX = 720 }
-        this.canPosX = this.canPosX - 8;
-      }, 200);
-    }
+    this.walkleftInterval = setInterval(() => {
+      if (this.currentImage >= this.collection.walk.length) {
+        this.currentImage = 0;
+      }
+      this.img = this.collection.walk[this.currentImage];
+      this.currentImage++;
+      if (this.canPosX < 0) { this.canPosX = 5000 }
+      this.canPosX = this.canPosX - 8;
+    }, 200);
+  }
+
+
+  stopWalkLeft() {
+    clearInterval(this.walkleftInterval);
   }
 
   imgPathsWalk = [
