@@ -107,7 +107,7 @@ class Pepe extends GeneralObject {
 
   animateGetHurt() {
     this.currentImage = 0;
-    // this.playAudio('get_hurt_sound');
+    // REVIEW this.playAudio('get_hurt_sound');
     let interval = setInterval(() => {
       this.img = this.collection.hurt[this.currentImage];
       this.currentImage++;

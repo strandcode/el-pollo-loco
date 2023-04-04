@@ -7,7 +7,8 @@ body {
 }
 
 canvas {
-  background-color: black;
+  /* background-color: black; */
+  border-radius: 20px;
 }
 
 .start-screen {
@@ -17,6 +18,10 @@ canvas {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+button {
+  background-color: rebeccapurple;
 }
 
 .d-none {

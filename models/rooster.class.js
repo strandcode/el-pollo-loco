@@ -4,7 +4,7 @@ class Rooster extends GeneralObject {
   scaleFactor = 0.19;
   scaledWidth = this.originWidth * this.scaleFactor;
   scaledHeight = Math.floor(this.originHeight * this.scaleFactor);
-  canPosX = 3500;
+  canPosX = 4500;
   canPosY = 220;
 
   offsetX = 10;
@@ -14,6 +14,16 @@ class Rooster extends GeneralObject {
 
   energyLevel = 100;
 
+  alertedCount = 0;
+
+  // NOTE Intervals of the rooster
+
+  interval__IsAlerted;
+  interval__IsAttacking;
+  interval__GetHurt;
+  interval__IsDying;
+
+
   constructor() {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
@@ -22,9 +32,18 @@ class Rooster extends GeneralObject {
     this.loadCollection('imgPathsHurt', 'hurt');
     this.loadCollection('imgPathsDying', 'dying');
     this.img = this.collection.walk[0];
+    // REVIEW this.checkIMG();
   }
 
 
+  // REVIEW checkIMG() {
+  //   setInterval(() => {
+  //     console.log('Rooster-IMG' + this.img.src);
+  //   }, 500);
+  // }
+
+
+  // Wird nicht aufgerufen
   walkLeft() {
     this.currentImage = 0;
     setInterval(() => {
@@ -38,9 +57,61 @@ class Rooster extends GeneralObject {
     }, 200);
   }
 
+
+  isAlerted() {
+    this.currentImage = 0;
+    // TODO this.playAudio('get_hurt_sound');
+    this.interval__IsAlerted = setInterval(() => {
+      this.img = this.collection.alert[this.currentImage];
+      this.currentImage++;
+      if (this.currentImage > this.collection.alert.length) {
+        clearInterval(this.interval__IsAlerted);
+        this.alertedCount++;
+        this.img = this.collection.alert[this.collection.alert.length - 1];
+        if (this.alertedCount >= 5) {
+          this.alertedCount = 0;
+          this.isAttacking();
+        } else {
+          // setTimeout(() => {
+          this.isAlerted();
+          // }, 2000);
+        }
+      }
+    }, 100);
+  }
+
+
+
+
+  isAttacking() {
+    // und pepe in sichtweite ist
+    if (this.isAlive) {
+      this.currentImage = 0;
+      // TODO this.playAudio('get_hurt_sound');
+      this.interval__IsAttacking = setInterval(() => {
+        this.img = this.collection.attack[this.currentImage];
+        console.log(this.currentImage);
+        this.currentImage++;
+        if (this.currentImage == 3) { this.canPosY -= 30 }
+        if (this.currentImage == 4) { this.canPosY -= 30 }
+        if (this.currentImage == 5) { this.canPosY -= 30 }
+        if (this.currentImage == 6) { this.canPosY += 30 }
+        if (this.currentImage == 7) { this.canPosY += 60 }
+        this.canPosX -= 20;
+        if (this.currentImage > this.collection.attack.length) {
+          clearInterval(this.interval__IsAttacking);
+          this.img = this.collection.walk[0];
+          this.isAlerted();
+        }
+      }, 100);
+    }
+  }
+
+
   isAttacked() {
     if (this.isAlive) {
-      // this.animateGetHurt();
+      // TODO this.playAudio('');
+      this.animateGetHurt();
       this.energyLevel -= 20;
       console.log('Rooster is attacked! Energy: ' + this.energyLevel);
 
@@ -52,20 +123,44 @@ class Rooster extends GeneralObject {
     }
   }
 
+  animateGetHurt() {
+    this.currentImage = 0;
+    // TODO this.playAudio('');
+    this.interval__GetHurt = setInterval(() => {
+      this.img = this.collection.hurt[this.currentImage];
+      this.currentImage++;
+      if (this.currentImage > this.collection.hurt.length) {
+        clearInterval(this.interval__GetHurt);
+        this.img = this.collection.hurt[this.collection.hurt.length - 1];
+      }
+    }, 100);
+  }
+
+
+  clearAllIntervals() {
+    clearInterval(this.interval__IsAlerted);
+    clearInterval(this.interval__IsAttacking);
+    clearInterval(this.interval__GetHurt);
+    // clearInterval(this.interval__IsDying);
+    console.log('Alle Intervalle in Rooster gecleared');
+  }
 
 
   animateDying() {
+
     this.currentImage = 0;
+    // TODO this.playAudio('');
     this.isAlive = false;
-    let interval = setInterval(() => {
+    this.interval__IsDying = setInterval(() => {
       this.img = this.collection.dying[this.currentImage];
       this.currentImage++;
       console.log(this.currentImage);
       if (this.currentImage > this.collection.dying.length) {
-        clearInterval(interval);
+        clearInterval(this.interval__IsDying);
         this.img = this.collection.dying[2];
+
         setTimeout(() => {
-          console.log('You win!!');
+          console.log('You win!!'); // TODO
         }, 1000);
       }
     }, 300);

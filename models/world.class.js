@@ -8,7 +8,8 @@ class World {
   statusBarHealth = new StatusBarHealth();
   statusBarCoin = new StatusBarCoin();
   statusBarBottle = new StatusBarBottle();
-  statusBarRooster = new StatusBarRooster();
+  statusBarRooster = new StatusBarHealth();
+  roosterIcon = new RoosterIcon();
   chick = new Chick();
   hen = new Hen();
   rooster = new Rooster();
@@ -26,12 +27,17 @@ class World {
   enemies = [this.chick, this.hen, this.rooster];
   projectiles = [];
 
+  // NOTE Intervals of world class
+
+  interval__checkEnemyCollisions;
+
   constructor() {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
 
-    this.statusBarHealth.show(100);
+
+
     this.checkPepesCollisions();
     this.checkEnemyCollisions();
 
@@ -39,18 +45,33 @@ class World {
     this.bottle.createBottles(200, 100, 25);
     this.chick.createChicks(1500, 100, 10);
     this.hen.createHens(1000, 200, 5);
+    this.setStatusBars();
     this.activateEnemies();
   }
 
-  activateEnemies() {
-    this.chicks.forEach(chick => { chick.walkLeft(); });
-    this.hens.forEach(hen => { hen.walkLeft(); });
+  setStatusBars() {
+    this.statusBarHealth.show(100);
+    this.statusBarRooster.canPosX = this.canvas.width - this.statusBarRooster.scaledWidth - 20;
+    this.statusBarRooster.canPosY = 20;
+    this.statusBarRooster.show(100);
   }
 
 
+  activateEnemies() {
+    // this.chicks.forEach(chick => { chick.walkLeft(); });
+    // this.hens.forEach(hen => { hen.walkLeft(); });
+    this.rooster.isAlerted();
+  }
+
+
+  clearAllIntervals() {
+    clearInterval(this.interval__checkEnemyCollisions);
+  }
+
 
   checkEnemyCollisions() {
-    setInterval(() => {
+    let isRoosterDamaged = false;
+    this.checkEnemyCollisions = setInterval(() => {
       this.chicks.forEach((chick) => {
         if (chick.isColliding(this.throwableObject) && chick.isAlive) {
           console.log(chick.ID + ' wurde getroffen');
@@ -69,9 +90,22 @@ class World {
         }
       });
 
-      if (this.rooster.isColliding(this.throwableObject) && this.rooster.isAlive) {
-        console.log('Rooster wurde getroffen');
-        this.rooster.isAttacked();
+      if (this.rooster.isColliding(this.throwableObject) && this.rooster.isAlive && !isRoosterDamaged) {
+        console.log(this.throwableObject);
+        // this.rooster.isAttacked();
+        isRoosterDamaged = true;
+        this.rooster.energyLevel -= 20;
+        console.log('Rooster is attacked! Energy: ' + this.rooster.energyLevel);
+        this.statusBarRooster.show(this.rooster.energyLevel);
+        setTimeout(() => {
+          isRoosterDamaged = false;
+        }, 1000);
+        if (this.rooster.energyLevel <= 0) {
+          this.rooster.clearAllIntervals();
+          this.clearAllIntervals();
+          this.rooster.energyLevel = 0;
+          this.rooster.animateDying();
+        }
       }
 
     }, 200);
@@ -112,14 +146,17 @@ class World {
         }
       });
 
-
+      if (this.pepe.isColliding(this.rooster) && this.rooster.isAlive) {
+        this.pepe.isAttacked();
+        this.pepe.energyLevel -= 25;
+        this.statusBarHealth.show(this.pepe.energyLevel);
+      }
 
 
       this.coins.forEach((coin) => {
         if (this.pepe.isColliding(coin)) {
           this.pepe.isCollectingCoin();
           this.statusBarCoin.show(this.pepe.coinLevel);
-          console.log(coin.ID);
 
           const coinIndex = this.coins.findIndex((b) => b.ID === coin.ID);
           this.coins.splice(coinIndex, 1);
@@ -130,7 +167,6 @@ class World {
         if (this.pepe.isColliding(bottle)) {
           this.pepe.isCollectingBottle();
           this.statusBarBottle.show(this.pepe.bottleLevel);
-          console.log(bottle.ID);
 
           const bottleIndex = this.bottles.findIndex((b) => b.ID === bottle.ID);
           this.bottles.splice(bottleIndex, 1);
@@ -167,6 +203,7 @@ class World {
     this.statusBarBottle.draw();
     this.statusBarCoin.draw();
     this.statusBarRooster.draw();
+    this.roosterIcon.draw();
 
     let self = this;
     requestAnimationFrame(function () {
@@ -174,50 +211,5 @@ class World {
       self.drawWorld();
     });
   }
-
-
-
-  // TODO Funktionen zusammenfassen
-  // drawCharacterToDisplay(gameCharacter) {
-  //   this.ctx.drawImage(this.gameCharacter.img, this.gameCharacter.canPosX, this.gameCharacter.canPosY, this.gameCharacter.scaledWidth, this.gameCharacter.scaledHeight);
-  // }
-
-
-
-  // LINK https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/drawImage
-  // drawCharacter() {
-  //   this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-  // }
-
-
-
-
-
-  // drawEnemies() {
-  //   this.enemies.forEach(enemy => {
-  //     // this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-  //     this.addToGameDisplay(enemy);
-  //   });
-  // }
-  // addObjectsToGameDisplay(this.enemies);
-
-  // addObjectsToGameDisplay(objects) {
-  //   objects.forEach(o => {
-  //     this.addToGameDisplay(o);
-  //   })
-  // }
-
-  // addToGameDisplay(movableObject) {
-  //   this.ctx.drawImage(movableObject.img, movableObject.x, movableObject.y, movableObject.width, movableObject.height);
-  // }
-
-  // // drawCloud() {
-  // //   this.ctx.drawImage(this.clouds.img, this.clouds.x, this.clouds.y, this.clouds.width, this.clouds.height);
-  // // }
-
-  // drawConsole() {
-  //   console.log('Hallo draw');
-  // }
-
 
 }

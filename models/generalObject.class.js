@@ -87,6 +87,9 @@ class GeneralObject {
   drawOffsetFrames() {
     if (!(this instanceof Background)
       && !(this instanceof Clouds)
+      && !(this instanceof RoosterIcon)
+      && !(this instanceof Coin)
+      && !(this instanceof Bottle)
       && !(this instanceof StatusBar)) {
 
       if (this instanceof Pepe) {

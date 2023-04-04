@@ -16,7 +16,9 @@ class StatusBarRooster extends GeneralObject {
 
   imgPathsStatusBarOrange = [
     'img/7_statusbars/4_bar_elements/statusbar_orange.png',
+    'img/7_statusbars/3_icons/icon_health_endboss.png'
   ];
+
 
 
 }
