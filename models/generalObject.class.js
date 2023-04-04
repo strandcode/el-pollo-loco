@@ -50,7 +50,7 @@ class GeneralObject {
       this.isImageFlipped = false;
       this.ctx.drawImage(this.img, this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
       // this.drawFrames();
-      this.drawOffsetFrames();
+      // this.drawOffsetFrames();
     }
   }
 
@@ -67,45 +67,46 @@ class GeneralObject {
     this.canPosY = y;
   }
 
-  drawFrames() {
-    if (!(this instanceof Background)
-      && !(this instanceof Clouds)
-      && !(this instanceof StatusBar)) {
+  // REVIEW
+  // drawFrames() {
+  //   if (!(this instanceof Background)
+  //     && !(this instanceof Clouds)
+  //     && !(this instanceof StatusBar)) {
 
-      if (this instanceof Pepe) {
-        this.ctx.strokeStyle = "red";
-      } else {
-        this.ctx.strokeStyle = "green";
-      }
-      this.ctx.beginPath();
-      this.ctx.lineWidth = "1";
-      this.ctx.rect(this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
-      this.ctx.stroke();
-    }
-  }
+  //     if (this instanceof Pepe) {
+  //       this.ctx.strokeStyle = "red";
+  //     } else {
+  //       this.ctx.strokeStyle = "green";
+  //     }
+  //     this.ctx.beginPath();
+  //     this.ctx.lineWidth = "1";
+  //     this.ctx.rect(this.canPosX, this.canPosY, this.scaledWidth, this.scaledHeight);
+  //     this.ctx.stroke();
+  //   }
+  // }
 
-  drawOffsetFrames() {
-    if (!(this instanceof Background)
-      && !(this instanceof Clouds)
-      && !(this instanceof RoosterIcon)
-      && !(this instanceof Coin)
-      && !(this instanceof Bottle)
-      && !(this instanceof StatusBar)) {
+  // drawOffsetFrames() {
+  //   if (!(this instanceof Background)
+  //     && !(this instanceof Clouds)
+  //     && !(this instanceof RoosterIcon)
+  //     && !(this instanceof Coin)
+  //     && !(this instanceof Bottle)
+  //     && !(this instanceof StatusBar)) {
 
-      if (this instanceof Pepe) {
-        this.ctx.strokeStyle = "rebeccapurple";
-      } else {
-        this.ctx.strokeStyle = "green";
-      }
-      this.ctx.beginPath();
-      this.ctx.lineWidth = "1";
-      this.ctx.strokeRect(
-        (this.canPosX + this.offsetX),
-        (this.canPosY + this.offsetY),
-        (this.scaledWidth + this.offsetW),
-        (this.scaledHeight + this.offsetH));
-    }
-  }
+  //     if (this instanceof Pepe) {
+  //       this.ctx.strokeStyle = "rebeccapurple";
+  //     } else {
+  //       this.ctx.strokeStyle = "green";
+  //     }
+  //     this.ctx.beginPath();
+  //     this.ctx.lineWidth = "1";
+  //     this.ctx.strokeRect(
+  //       (this.canPosX + this.offsetX),
+  //       (this.canPosY + this.offsetY),
+  //       (this.scaledWidth + this.offsetW),
+  //       (this.scaledHeight + this.offsetH));
+  //   }
+  // }
 
 
   flipImage() {

@@ -16,23 +16,17 @@ class Hen extends GeneralObject {
     super();
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsDead', 'dead');
-    if (this.isAlive) {
-      this.img = this.collection.walk[0];
-    } else {
-      this.img = this.collection.dead[0];
-    }
+    this.img = this.collection.walk[0];
+    this.walkLeft();
   }
 
-  // TODO Verteilung nach dem Zufallssprinzip
-  createHens(startX, spreadX, quantity) {
-    let startSpreadX = 0;
+  createHens(x, quantity) {
     for (let i = 0; i < quantity; i++) {
       let newHen = new Hen();
       newHen.canPosX = 0;
-      newHen.ID = 'hen-' + i;
-      newHen.canPosX += startX + startSpreadX;
-      startSpreadX += spreadX;
-      this.hens.push(newHen);
+      newHen.ID = 'Hen-' + i;
+      newHen.canPosX += x + 100 + (Math.random() * 2500);
+      allHensInTheWorld.push(newHen);
     }
   }
 

@@ -17,19 +17,16 @@ class Chick extends GeneralObject {
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.walk[0];
-
+    this.walkLeft();
   }
 
-  // TODO Verteilung nach dem Zufallssprinzip
-  createChicks(startX, spreadX, quantity) {
-    let startSpreadX = 0;
+  createChicks(x, quantity) {
     for (let i = 0; i < quantity; i++) {
       let newChick = new Chick();
       newChick.canPosX = 0;
-      newChick.ID = 'chick-' + i;
-      newChick.canPosX += startX + startSpreadX;
-      startSpreadX += spreadX;
-      this.chicks.push(newChick);
+      newChick.ID = 'Chick-' + i;
+      newChick.canPosX += x + 100 + (Math.random() * 2500);
+      allChicksInTheWorld.push(newChick);
     }
   }
 

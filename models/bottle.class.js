@@ -22,18 +22,35 @@ class Bottle extends GeneralObject {
     this.img = this.collection.onGround[0];
   }
 
-  createBottles(startX, spreadX, quantity) {
-    let startSpreadX = 0;
-    for (let i = 0; i < quantity; i++) {
+  createBottlePair(x) {
+    for (let i = 0; i < 2; i++) {
       let newBottle = new Bottle();
-      newBottle.canPosX = 0;
-      newBottle.ID = 'bottle-' + i;
-      newBottle.img = this.collection.onGround[1];
-      newBottle.canPosX += startX + startSpreadX;
-      startSpreadX += spreadX;
-      this.bottles.push(newBottle);
+      if (i === 0 || i % 2 === 0) {
+        newBottle.img = this.collection.onGround[0];
+        newBottle.canPosX = x;
+      }
+      if (i % 2 === 1) {
+        newBottle.img = this.collection.onGround[1];
+        newBottle.canPosX = x + 30;
+      }
+      allBottlesInTheWorld.push(newBottle);
     }
   }
+
+
+
+  // createBottles(startX, spreadX, quantity) {
+  //   let startSpreadX = 0;
+  //   for (let i = 0; i < quantity; i++) {
+  //     let newBottle = new Bottle();
+  //     newBottle.canPosX = 0;
+  //     newBottle.ID = 'bottle-' + i;
+  //     newBottle.img = this.collection.onGround[1];
+  //     newBottle.canPosX += startX + startSpreadX;
+  //     startSpreadX += spreadX;
+  //     this.bottles.push(newBottle);
+  //   }
+  // }
 
 
 

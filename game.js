@@ -7,8 +7,11 @@ const keyboard = new Keyboard();
 const world = new World();
 
 function startGame() {
-  const startScreen = document.querySelector('.start-screen');
+  let startScreen = document.getElementById('startScreen');
+  const startGameButton = document.getElementById('startGameButton');
   startScreen.classList.add('d-none');
+  startGameButton.classList.add('d-none');
+  canvas.classList.remove('d-none');
 }
 
 // TODO exclude to controlPepe.js
@@ -25,6 +28,8 @@ let isKeyDPressed = false;
 let isKeyEscapePressed = false;
 
 let walkingIntervalId = null;
+let jumpPrevent = false;
+let throwPrevent = false;
 
 
 function controlPepe() {

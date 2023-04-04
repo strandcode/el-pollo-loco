@@ -31,22 +31,20 @@ class Coin extends GeneralObject {
     }
   }
 
+  createCoinPair(x, y) {
 
-
-  // TODO Funktion erstellen
-  // createCoinQuartet(x, y) {
-  //   let startX = x;
-  //   let startY = y;
-  //   let space = 25;
-
-
-  //   this.draw(startX, startY);
-  //   this.draw((startX + 1 * space), (startY - 1 * space));
-  //   this.draw((startX + 1 * space), (startY + 1 * space));
-  //   this.draw((startX + 2 * space), (startY - 0 * space));
-
-  //   this.coinQuartet = coinQuartet;
-  // }
+    for (let i = 0; i < 2; i++) {
+      let newCoin = new Coin();
+      newCoin.img = this.collection.complete[0];
+      newCoin.canPosX = x;
+      newCoin.canPosY = y;
+      if (i == 1) {
+        newCoin.canPosX += 25;
+        newCoin.canPosY -= 25;
+      }
+      allCoinsInTheWorld.push(newCoin);
+    }
+  }
 
   animateCoin() {
     setInterval(() => {

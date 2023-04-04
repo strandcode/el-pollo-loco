@@ -1,7 +1,7 @@
 class World {
 
   // NOTE Create all world's objects from related classes
-  background = new Background();  // TODO load layers
+  background = new Background();
   clouds = new Clouds();
   pepe = new Pepe();
   statusBar = new StatusBar();
@@ -17,14 +17,12 @@ class World {
   bottle = new Bottle();
   throwableObject = new ThrowableObject();
 
-  // Arrays für 
-  bottles = this.bottle.bottles;
-  coins = this.coin.coins;
+  // Arrays aus dem Level_1 
+  bottles = allBottlesInTheWorld;
+  coins = allCoinsInTheWorld;
+  chicks = allChicksInTheWorld;
+  hens = allHensInTheWorld;
 
-  chicks = this.chick.chicks;
-  hens = this.hen.hens;
-
-  enemies = [this.chick, this.hen, this.rooster];
   projectiles = [];
 
   // NOTE Intervals of world class
@@ -36,15 +34,8 @@ class World {
     this.ctx = canvas.getContext('2d');
     this.drawWorld();
 
-
-
     this.checkPepesCollisions();
     this.checkEnemyCollisions();
-
-    this.coin.createCoins(200, 200, 10);
-    this.bottle.createBottles(200, 100, 25);
-    this.chick.createChicks(1500, 100, 10);
-    this.hen.createHens(1000, 200, 5);
     this.setStatusBars();
     this.activateEnemies();
   }
@@ -58,8 +49,6 @@ class World {
 
 
   activateEnemies() {
-    // this.chicks.forEach(chick => { chick.walkLeft(); });
-    // this.hens.forEach(hen => { hen.walkLeft(); });
     this.rooster.isAlerted();
   }
 
@@ -164,6 +153,7 @@ class World {
       this.bottles.forEach((bottle) => {
         if (this.pepe.isColliding(bottle)) {
           this.pepe.isCollectingBottle();
+          console.log(bottle.ID);
           this.statusBarBottle.show(this.pepe.bottleLevel);
 
           const bottleIndex = this.bottles.findIndex((b) => b.ID === bottle.ID);
@@ -189,8 +179,8 @@ class World {
     this.background.drawBackground();
     this.chicks.forEach(chick => chick.draw());
     this.hens.forEach(hen => hen.draw());
-    this.bottle.bottles.forEach(bottle => bottle.draw());
-    this.coin.coins.forEach(coin => coin.draw());
+    this.bottles.forEach(bottle => bottle.draw());
+    this.coins.forEach(coin => coin.draw());
     this.rooster.draw();
     this.pepe.draw();
     this.throwableObject.draw();
