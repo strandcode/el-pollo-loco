@@ -1,9 +1,10 @@
 
 const canvas = document.getElementById('canvas');
-const gameDisplay = new GameDisplay(canvas, 720, 480);
+let canvasWidth = window.innerWidth - 10;
+if (canvasWidth > 1000) { canvasWidth = 1000; }
+const gameDisplay = new GameDisplay(canvas, canvasWidth, 480);
 const keyboard = new Keyboard();
 const world = new World();
-
 
 function startGame() {
   const startScreen = document.querySelector('.start-screen');

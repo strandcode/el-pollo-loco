@@ -91,8 +91,6 @@ class World {
       });
 
       if (this.rooster.isColliding(this.throwableObject) && this.rooster.isAlive && !isRoosterDamaged) {
-        console.log(this.throwableObject);
-        // this.rooster.isAttacked();
         isRoosterDamaged = true;
         this.rooster.energyLevel -= 20;
         console.log('Rooster is attacked! Energy: ' + this.rooster.energyLevel);
