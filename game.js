@@ -6,15 +6,35 @@ const gameDisplay = new GameDisplay(canvas, canvasWidth, 480);
 const keyboard = new Keyboard();
 const world = new World();
 
+
+
+const startGameButton = document.getElementById('startGameButton');
+const controlDescription = document.getElementById('controlDescription');
+const startScreen = document.getElementById('startScreen');
+
 function startGame() {
-  let startScreen = document.getElementById('startScreen');
-  const startGameButton = document.getElementById('startGameButton');
-  const controlDescription = document.getElementById('controlDescription');
   startScreen.classList.add('d-none');
   startGameButton.classList.add('d-none');
   canvas.classList.remove('d-none');
   controlDescription.classList.remove('d-none');
 }
+
+const levelSummary = document.getElementById('levelSummary');
+const collectedCoins = document.getElementById('collectedCoins');
+const thrownBottles = document.getElementById('thrownBottles');
+const killedEnemies = document.getElementById('killedEnemies');
+
+function showLevelSummary() {
+  levelSummary.classList.remove('d-none');
+  collectedCoins.innerHTML = '5';
+  thrownBottles.innerHTML = '12';
+  killedEnemies.innerHTML = '9';
+}
+
+function startNextLevel() {
+  levelSummary.classList.add('d-none');
+}
+
 
 // TODO exclude to controlPepe.js
 
@@ -39,6 +59,7 @@ function controlPepe() {
     if (event.code == "ArrowRight") {
       isArrowRightPressed = true;
       world.pepe.isPepeWalking = true;
+      world.activateEnemies();
 
       if (!world.pepe.isOffGround) {
         world.pepe.animateWalk();

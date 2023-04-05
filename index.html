@@ -15,7 +15,7 @@
 </head>
 
 <body>
-  <h1>El Pollo Loco</h1>
+  <h1>El Pollo Loco - <span>Level 1</span> </h1>
   <canvas id="canvas" class="d-none" width="720" height="480"></canvas>
 
   <div id="startScreen" class="start-screen"></div>
@@ -41,6 +41,15 @@
     </div>
   </div>
 
+  <div id="levelSummary" class="level-summary d-none">
+
+    <h2>Your Score</h2>
+    <p>Collected coins: <span id="collectedCoins"></span></p>
+    <p>Thrown bottles: <span id="thrownBottles"></span></p>
+    <p>Killed enemies: <span id="killedEnemies"></span></p>
+    <button id="startNextLevelButton" class="" onclick="startNextLevel()">Start next level</button>
+  </div>
+
 
 
   <script src="models/gameDisplay.class.js"></script>
@@ -64,6 +73,7 @@
   <script src="models/background.class.js"></script>
   <script src="models/world.class.js"></script>
   <script src="levels/level_1.js"></script>
+  <script src="models/gameOverScreen.class.js"></script>
   <script src="game.js"></script>
 
 </body>

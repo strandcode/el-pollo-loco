@@ -87,6 +87,25 @@ button:hover {
   font-weight: 900;
 }
 
+.level-summary {
+  padding: 200px 50px;
+  position: absolute;
+  inset: 0;
+  background-color: #994409;
+  color: #ffc700;
+  z-index: 4;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level-summary h2,
+.level-summary p,
+.level-summary span {
+  font-size: 2rem;
+}
+
 .d-none {
   display: none;
 }

@@ -1,4 +1,4 @@
-// TODO Level auslagern und über eine Level-Klasse definieren
+// NOTE Create bottles for level 1
 let bottle = new Bottle();
 let allBottlesInTheWorld = [];
 
@@ -17,9 +17,8 @@ bottle.createBottlePair(2050);
 bottle.createBottlePair(2200);
 bottle.createBottlePair(2350);
 bottle.createBottlePair(2500);
-// console.log(allBottlesInTheWorld);
 
-
+// NOTE Create coins for level 1
 let coin = new Coin();
 let allCoinsInTheWorld = [];
 
@@ -32,20 +31,15 @@ coin.createCoinPair(725, 125);
 coin.createCoinPair(900, 100);
 coin.createCoinPair(925, 125);
 
-
-console.log(allCoinsInTheWorld);
-
-
+// NOTE Create chicks for level 1
 let chick = new Chick();
 let allChicksInTheWorld = [];
 
 chick.createChicks(1000, 10);
 
-console.log(allChicksInTheWorld);
 
+// NOTE Create hens for level 1
 let hen = new Hen();
 let allHensInTheWorld = [];
 
 hen.createHens(1500, 5);
-
-console.log(allHensInTheWorld);

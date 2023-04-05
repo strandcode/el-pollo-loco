@@ -16,6 +16,7 @@ class World {
   coin = new Coin();
   bottle = new Bottle();
   throwableObject = new ThrowableObject();
+  gameOverScreen = new GameOverScreen();
 
   // Arrays aus dem Level_1 
   bottles = allBottlesInTheWorld;
@@ -37,7 +38,6 @@ class World {
     this.checkPepesCollisions();
     this.checkEnemyCollisions();
     this.setStatusBars();
-    this.activateEnemies();
   }
 
   setStatusBars() {
@@ -49,7 +49,10 @@ class World {
 
 
   activateEnemies() {
-    this.rooster.isAlerted();
+    if (this.rooster.isSleeping) {
+      this.rooster.isSleeping = false;
+      this.rooster.isAlerted();
+    }
   }
 
 
@@ -94,6 +97,9 @@ class World {
           this.clearAllIntervals();
           this.rooster.energyLevel = 0;
           this.rooster.animateDying();
+          setTimeout(() => {
+            showLevelSummary();
+          }, 3000);
         }
       }
 
@@ -112,7 +118,6 @@ class World {
             this.pepe.energyLevel -= 5;
             this.statusBarHealth.show(this.pepe.energyLevel);
           } else {
-            console.log(chick.ID + ' ist platt');
             chick.isAlive = false;
             chick.stopWalkLeft();
             chick.img = chick.collection.dead[0];
@@ -127,7 +132,6 @@ class World {
             this.pepe.energyLevel -= 10;
             this.statusBarHealth.show(this.pepe.energyLevel);
           } else {
-            console.log(hen.ID + ' ist platt');
             hen.isAlive = false;
             hen.stopWalkLeft();
             hen.img = hen.collection.dead[0];
@@ -141,6 +145,11 @@ class World {
         this.statusBarHealth.show(this.pepe.energyLevel);
       }
 
+      if (this.pepe.energyLevel <= 0) {
+        setTimeout(() => {
+          this.gameOverScreen.canPosY = 0;
+        }, 2000);
+      }
 
       this.coins.forEach((coin) => {
         if (this.pepe.isColliding(coin)) {
@@ -155,7 +164,6 @@ class World {
       this.bottles.forEach((bottle) => {
         if (this.pepe.isColliding(bottle)) {
           this.pepe.isCollectingBottle();
-          console.log(bottle.ID);
           this.statusBarBottle.show(this.pepe.bottleLevel);
 
           const bottleIndex = this.bottles.findIndex((b) => b.ID === bottle.ID);
@@ -163,6 +171,7 @@ class World {
           this.projectiles.push(bottle);
         }
       });
+
     }, 200);
   }
 
@@ -194,6 +203,7 @@ class World {
     this.statusBarCoin.draw();
     this.statusBarRooster.draw();
     this.roosterIcon.draw();
+    this.gameOverScreen.draw();
 
     let self = this;
     requestAnimationFrame(function () {

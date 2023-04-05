@@ -13,6 +13,7 @@ class Rooster extends GeneralObject {
   offsetH = -40;
 
   energyLevel = 100;
+  isSleeping = true;
 
   alertedCount = 0;
 
@@ -68,6 +69,7 @@ class Rooster extends GeneralObject {
       if (this.currentImage > this.collection.alert.length) {
         clearInterval(this.interval__IsAlerted);
         this.alertedCount++;
+        console.log('Rooster is alerted');
         this.img = this.collection.alert[this.collection.alert.length - 1];
         if (this.alertedCount >= 5) {
           this.alertedCount = 0;

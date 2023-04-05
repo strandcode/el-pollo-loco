@@ -139,9 +139,6 @@ class Pepe extends GeneralObject {
         clearInterval(interval);
         this.img = this.collection.hurt[2];
         this.isAlive = false;
-        setTimeout(() => {
-          console.log('Game over!');
-        }, 1000);
       }
     }, 600);
   }
