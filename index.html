@@ -19,7 +19,28 @@
   <canvas id="canvas" class="d-none" width="720" height="480"></canvas>
 
   <div id="startScreen" class="start-screen"></div>
-  <button id="startGameButton" onclick="startGame()">Start game</button>
+  <button id="startGameButton" class="" onclick="startGame()">Start game</button>
+
+
+  <div id="controlDescription" class="control-description-wrapper d-none">
+    <div class="control-item">
+      <img class="rotate-180" src="img/icons/arrow-64.png" alt="" srcset="">
+      <span>walk left</span>
+    </div>
+    <div class="control-item">
+      <img src="img/icons/arrow-64.png" alt="" srcset="">
+      <span>walk right</span>
+    </div>
+    <div class="control-item">
+      <img class="rotate-90" src="img/icons/arrow-64.png" alt="" srcset="">
+      <span>jump</span>
+    </div>
+    <div class="control-item">
+      <span class="key-image">D</span>
+      <span>throw bottle</span>
+    </div>
+  </div>
+
 
 
   <script src="models/gameDisplay.class.js"></script>

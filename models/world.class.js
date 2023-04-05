@@ -80,6 +80,8 @@ class World {
       });
 
       if (this.rooster.isColliding(this.throwableObject) && this.rooster.isAlive && !isRoosterDamaged) {
+        this.rooster.clearAllIntervals();
+        this.rooster.animateGetHurt();
         isRoosterDamaged = true;
         this.rooster.energyLevel -= 20;
         console.log('Rooster is attacked! Energy: ' + this.rooster.energyLevel);
@@ -178,8 +180,8 @@ class World {
 
     this.background.drawBackground();
     this.chicks.forEach(chick => chick.draw());
-    this.hens.forEach(hen => hen.draw());
     this.bottles.forEach(bottle => bottle.draw());
+    this.hens.forEach(hen => hen.draw());
     this.coins.forEach(coin => coin.draw());
     this.rooster.draw();
     this.pepe.draw();

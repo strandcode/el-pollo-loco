@@ -60,6 +60,7 @@ class Rooster extends GeneralObject {
 
   isAlerted() {
     this.currentImage = 0;
+    this.canPosY = 220;
     // TODO this.playAudio('get_hurt_sound');
     this.interval__IsAlerted = setInterval(() => {
       this.img = this.collection.alert[this.currentImage];
@@ -131,6 +132,7 @@ class Rooster extends GeneralObject {
       if (this.currentImage > this.collection.hurt.length) {
         clearInterval(this.interval__GetHurt);
         this.img = this.collection.hurt[this.collection.hurt.length - 1];
+        this.isAlerted();
       }
     }, 100);
   }
@@ -156,7 +158,7 @@ class Rooster extends GeneralObject {
       if (this.currentImage > this.collection.dying.length) {
         clearInterval(this.interval__IsDying);
         this.img = this.collection.dying[2];
-
+        this.canPosY = 220;
         setTimeout(() => {
           console.log('You win!!'); // TODO
         }, 1000);

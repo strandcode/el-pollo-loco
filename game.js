@@ -9,9 +9,11 @@ const world = new World();
 function startGame() {
   let startScreen = document.getElementById('startScreen');
   const startGameButton = document.getElementById('startGameButton');
+  const controlDescription = document.getElementById('controlDescription');
   startScreen.classList.add('d-none');
   startGameButton.classList.add('d-none');
   canvas.classList.remove('d-none');
+  controlDescription.classList.remove('d-none');
 }
 
 // TODO exclude to controlPepe.js
@@ -51,8 +53,8 @@ function controlPepe() {
         world.pepe.animateWalk();
       }
     }
-    if (event.code == "Space") {
-      isSpacePressed = true;
+    if (event.code == "ArrowUp") {
+      isArrowUpPressed = true;
       world.pepe.stopWalk();
     }
     if (event.code == "KeyD") {
@@ -81,8 +83,8 @@ function controlPepe() {
       world.pepe.isPepeWalking = false;
       world.pepe.stopWalk();
     }
-    if (event.code == "Space") {
-      isSpacePressed = false;
+    if (event.code == "ArrowUp") {
+      isArrowUpPressed = false;
     }
     if (event.code == "KeyD") {
       isKeyDPressed = false;
@@ -100,7 +102,7 @@ function controlPepe() {
       world.pepe.moveLeft();
     }
 
-    if (isSpacePressed) {
+    if (isArrowUpPressed) {
       world.pepe.jump();
     }
 

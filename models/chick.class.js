@@ -25,7 +25,7 @@ class Chick extends GeneralObject {
       let newChick = new Chick();
       newChick.canPosX = 0;
       newChick.ID = 'Chick-' + i;
-      newChick.canPosX += x + 100 + (Math.random() * 2500);
+      newChick.canPosX += x + 200 + (Math.random() * 2500);
       allChicksInTheWorld.push(newChick);
     }
   }
