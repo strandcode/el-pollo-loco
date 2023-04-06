@@ -17,7 +17,6 @@ class Hen extends GeneralObject {
     this.loadCollection('imgPathsWalk', 'walk');
     this.loadCollection('imgPathsDead', 'dead');
     this.img = this.collection.walk[0];
-    this.walkLeft();
   }
 
   createHens(x, quantity) {

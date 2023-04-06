@@ -56,6 +56,8 @@ let isKeyEscapePressed = false;
 let walkingIntervalId = null;
 let jumpPrevent = false;
 let throwPrevent = false;
+let areEnemiesActivated = false;
+
 
 
 function controlPepe() {
@@ -86,7 +88,7 @@ function controlPepe() {
     if (event.code == "KeyD") {
       isKeyDPressed = true;
       if (world.projectiles.length > 0) {
-        world.throwableObject.throw((world.pepe.canPosX + world.pepe.scaledWidth + world.pepe.offsetW), 250);
+        world.throwableObject.throw((world.pepe.canPosX + world.pepe.scaledWidth + world.pepe.offsetW), world.pepe.canPosY + 100);
         world.projectiles.splice(0, 1);
         world.pepe.bottleLevel -= 5;
         world.statusBarBottle.show(world.pepe.bottleLevel);

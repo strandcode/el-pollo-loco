@@ -13,7 +13,6 @@ class Rooster extends GeneralObject {
   offsetH = -40;
 
   energyLevel = 100;
-  isSleeping = true;
 
   alertedCount = 0;
 

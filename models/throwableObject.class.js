@@ -13,7 +13,7 @@ class ThrowableObject extends GeneralObject {
   offsetW = 0;
   offsetH = 0;
 
-  bottleFlight;
+  bottleFlight = false;
   animateBottleRotationInterval;
 
   constructor() {
@@ -24,23 +24,28 @@ class ThrowableObject extends GeneralObject {
   }
 
   throw(x, y) {
-    this.animateBottleRotation();
-    this.canPosX = x;
-    this.canPosY = y;
-    this.speedY = 12;
-    this.bottleFlight = setInterval(() => {
-      this.canPosX += 10;
-      this.canPosY -= this.speedY;
-      this.speedY -= this.accelaration;
-      if (this.canPosY >= 390) {
-        clearInterval(this.bottleFlight);
-        clearInterval(this.animateBottleRotationInterval);
-        this.img = this.collection.splash[0];
-        setTimeout(() => {
-          this.canPosY = 2000;
-        }, 500);
-      }
-    }, 50);
+    console.log(this.bottleFlight);
+    if (!this.bottleFlight) {
+      this.bottleFlight = true;
+      this.animateBottleRotation();
+      this.canPosX = x;
+      this.canPosY = y;
+      this.speedY = 12;
+      this.bottleFlight = setInterval(() => {
+        this.canPosX += 10;
+        this.canPosY -= this.speedY;
+        this.speedY -= this.accelaration;
+        if (this.canPosY >= 390) {
+          clearInterval(this.bottleFlight);
+          clearInterval(this.animateBottleRotationInterval);
+          this.img = this.collection.splash[0];
+          setTimeout(() => {
+            this.canPosY = 2000;
+            this.bottleFlight = false;
+          }, 500);
+        }
+      }, 50);
+    }
   }
 
 

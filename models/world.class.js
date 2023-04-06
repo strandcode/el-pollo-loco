@@ -49,8 +49,14 @@ class World {
 
 
   activateEnemies() {
-    if (this.rooster.isSleeping) {
-      this.rooster.isSleeping = false;
+    if (!areEnemiesActivated) {
+      areEnemiesActivated = true;
+      this.chicks.forEach((chick) => {
+        chick.walkLeft();
+      })
+      this.hens.forEach((hen) => {
+        hen.walkLeft();
+      })
       this.rooster.isAlerted();
     }
   }
