@@ -45,11 +45,28 @@
   </div>
 
   <div id="levelSummary" class="level-summary d-none">
-
+    <img src="img/9_intro_outro_screens/start/startscreen_1.webp" alt="">
     <h2>Your Score</h2>
-    <p>Collected coins: <span id="collectedCoins"></span></p>
-    <p>Thrown bottles: <span id="thrownBottles"></span></p>
-    <p>Killed enemies: <span id="killedEnemies"></span></p>
+    <div class="score-summary-wrapper">
+      <div class="score-item">
+        <div>
+          <span id="collectedCoins">20</span>
+        </div>
+        <div>
+          collected coins
+        </div>
+      </div>
+      <div class="score-item">
+        <div>
+          <span id="thrownBottles">12</span>
+        </div>
+        thrown bottles
+      </div>
+      <div class="score-item">
+        <span id="killedEnemies">7</span>
+        killed enemies
+      </div>
+    </div>
     <button id="startNextLevelButton" class="" onclick="startNextLevel()">Play again</button>
   </div>
 

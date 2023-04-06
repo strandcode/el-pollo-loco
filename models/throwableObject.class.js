@@ -14,6 +14,7 @@ class ThrowableObject extends GeneralObject {
   offsetH = 0;
 
   bottleFlight = false;
+  thrownBottleCount = 0;
   animateBottleRotationInterval;
 
   constructor() {
@@ -27,6 +28,7 @@ class ThrowableObject extends GeneralObject {
     console.log(this.bottleFlight);
     if (!this.bottleFlight) {
       this.bottleFlight = true;
+      this.thrownBottleCount++;
       this.animateBottleRotation();
       this.canPosX = x;
       this.canPosY = y;

@@ -33,7 +33,7 @@ canvas {
 .start-screen {
   position: absolute;
   inset: 0;
-  background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+  background-image: url('img/9_intro_outro_screens/start/startscreen_1.webp');
   background-position: top;
   background-repeat: no-repeat;
   background-size: contain;
@@ -41,32 +41,41 @@ canvas {
 
 }
 
-button {
+#startGameButton {
   position: absolute;
   bottom: 20px;
   z-index: 2;
-  width: 200px;
-  height: 50px;
+}
+
+button {
   background-color: #ffc700;
-  /* border: 2px solid #9a3a17; */
+  font-family: 'Rubik', sans-serif;
   border: none;
   color: #63240e;
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
   cursor: pointer;
-  box-shadow: 2px 2px 0px 1px rgba(0, 0, 0, 0.253);
   transition: all 125ms ease-in-out;
 }
 
 button:hover {
-  background-color: #ffcf23;
-  transform: translateY(-1px);
+  background-color: #b76127;
+  color: #ffc700;
+  /* border: 1px solid hsla(47, 100%, 50%, 0.432); */
+  box-shadow: 2px 2px 0px 1px rgba(0, 0, 0, 0.253);
+  transform: translateY(-2px);
   transition: all 125ms ease-in-out;
 }
 
 .control-description-wrapper {
+  margin-top: 10px;
   padding: 50px;
   color: #ffc700;
   display: flex;
   gap: 20px;
+
+  background-color: #994409;
 }
 
 .control-item {
@@ -98,7 +107,7 @@ button:hover {
 }
 
 .level-summary {
-  padding: 200px 50px;
+  padding: 50px;
   position: absolute;
   inset: 0;
   background-color: #994409;
@@ -115,6 +124,36 @@ button:hover {
 .level-summary span {
   font-size: 2rem;
 }
+
+.level-summary h2 {
+  margin-block-end: 0;
+}
+
+.level-summary img {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: contain;
+}
+
+.score-summary-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 50px;
+  flex-wrap: wrap;
+}
+
+.score-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.score-item .coin {
+  height: 100px;
+  background-color: rebeccapurple;
+}
+
 
 .d-none {
   display: none;

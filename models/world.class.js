@@ -25,6 +25,7 @@ class World {
   hens = allHensInTheWorld;
 
   projectiles = [];
+  enemiesBodyCount = 0;
 
   // NOTE Intervals of world class
 
@@ -74,6 +75,7 @@ class World {
         if (chick.isColliding(this.throwableObject) && chick.isAlive) {
           console.log(chick.ID + ' wurde getroffen');
           chick.isAlive = false;
+          this.enemiesBodyCount++;
           chick.stopWalkLeft();
           chick.img = chick.collection.dead[0];
         }
@@ -83,6 +85,7 @@ class World {
         if (hen.isColliding(this.throwableObject) && hen.isAlive) {
           console.log(hen.ID + ' wurde getroffen');
           hen.isAlive = false;
+          this.enemiesBodyCount++;
           hen.stopWalkLeft();
           hen.img = hen.collection.dead[0];
         }
@@ -101,6 +104,7 @@ class World {
         if (this.rooster.energyLevel <= 0) {
           this.rooster.clearAllIntervals();
           this.clearAllIntervals();
+          this.enemiesBodyCount++;
           this.rooster.energyLevel = 0;
           this.rooster.animateDying();
           setTimeout(() => {
@@ -125,6 +129,7 @@ class World {
             this.statusBarHealth.show(this.pepe.energyLevel);
           } else {
             chick.isAlive = false;
+            this.enemiesBodyCount++;
             chick.stopWalkLeft();
             chick.img = chick.collection.dead[0];
           }
@@ -139,6 +144,7 @@ class World {
             this.statusBarHealth.show(this.pepe.energyLevel);
           } else {
             hen.isAlive = false;
+            this.enemiesBodyCount++;
             hen.stopWalkLeft();
             hen.img = hen.collection.dead[0];
             this.pepe.jump();

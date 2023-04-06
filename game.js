@@ -11,12 +11,14 @@ const world = new World();
 const startGameButton = document.getElementById('startGameButton');
 const controlDescription = document.getElementById('controlDescription');
 const startScreen = document.getElementById('startScreen');
+const gameMusic = new Audio('audio/Fluffing-a-Duck.mp3');
 
 function startGame() {
   startScreen.classList.add('d-none');
   startGameButton.classList.add('d-none');
   canvas.classList.remove('d-none');
   controlDescription.classList.remove('d-none');
+  gameMusic.play();
 }
 
 const levelSummary = document.getElementById('levelSummary');
@@ -26,9 +28,9 @@ const killedEnemies = document.getElementById('killedEnemies');
 
 function showLevelSummary() {
   levelSummary.classList.remove('d-none');
-  collectedCoins.innerHTML = '5';
-  thrownBottles.innerHTML = '12';
-  killedEnemies.innerHTML = '9';
+  collectedCoins.innerHTML = world.pepe.coinLevel / 5;
+  thrownBottles.innerHTML = world.throwableObject.thrownBottleCount;
+  killedEnemies.innerHTML = world.enemiesBodyCount;
 }
 
 function startNextLevel() {
