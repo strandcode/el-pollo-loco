@@ -30,6 +30,8 @@ coin.createCoinPair(700, 100);
 coin.createCoinPair(725, 125);
 coin.createCoinPair(900, 100);
 coin.createCoinPair(925, 125);
+coin.createCoinPair(2900, 100);
+coin.createCoinPair(2925, 125);
 
 // NOTE Create chicks for level 1
 let chick = new Chick();

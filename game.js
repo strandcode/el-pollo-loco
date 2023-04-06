@@ -32,7 +32,10 @@ function showLevelSummary() {
 }
 
 function startNextLevel() {
+  window.location.reload();
   levelSummary.classList.add('d-none');
+  startScreen.classList.add('d-none');
+  startGameButton.classList.add('d-none');
 }
 
 
@@ -47,6 +50,7 @@ let isSpacePressed = false;
 let isArrowUpPressed = false;
 let isArrowDownPressed = false;
 let isKeyDPressed = false;
+let isKeySPressed = false;
 let isKeyEscapePressed = false;
 
 let walkingIntervalId = null;
@@ -77,6 +81,7 @@ function controlPepe() {
     if (event.code == "ArrowUp") {
       isArrowUpPressed = true;
       world.pepe.stopWalk();
+      world.pepe.animateJump();
     }
     if (event.code == "KeyD") {
       isKeyDPressed = true;
@@ -86,6 +91,10 @@ function controlPepe() {
         world.pepe.bottleLevel -= 5;
         world.statusBarBottle.show(world.pepe.bottleLevel);
       }
+    }
+    if (event.code == "KeyS") {
+      isKeySPressed = true;
+      startNextLevel();
     }
 
 

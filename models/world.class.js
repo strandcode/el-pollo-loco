@@ -135,6 +135,7 @@ class World {
             hen.isAlive = false;
             hen.stopWalkLeft();
             hen.img = hen.collection.dead[0];
+            this.pepe.jump();
           }
         }
       });
@@ -172,7 +173,7 @@ class World {
         }
       });
 
-    }, 200);
+    }, 100);
   }
 
 

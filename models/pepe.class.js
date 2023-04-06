@@ -91,6 +91,19 @@ class Pepe extends GeneralObject {
     }
   }
 
+  animateJump() {
+    this.currentImage = 0;
+    // REVIEW this.playAudio('get_hurt_sound');
+    let interval = setInterval(() => {
+      this.img = this.collection.jump[this.currentImage];
+      this.currentImage++;
+      if (this.currentImage > this.collection.jump.length) {
+        clearInterval(interval);
+        this.img = this.collection.walk[0];
+      }
+    }, 100);
+  }
+
   isAttacked() {
     if (this.isAlive) {
       this.animateGetHurt();
@@ -101,8 +114,6 @@ class Pepe extends GeneralObject {
       }
     }
   }
-
-
 
 
   animateGetHurt() {
