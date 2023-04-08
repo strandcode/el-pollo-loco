@@ -161,6 +161,8 @@ class World {
       if (this.pepe.energyLevel <= 0) {
         setTimeout(() => {
           this.gameOverScreen.canPosY = 0;
+          gameMusic.pause();
+          this.rooster.sound_alerted_rooster.pause();
         }, 2000);
       }
 
@@ -168,7 +170,7 @@ class World {
         if (this.pepe.isColliding(coin)) {
           this.pepe.isCollectingCoin();
           this.statusBarCoin.show(this.pepe.coinLevel);
-
+          this.coin.sound__coin_collected.play();
           const coinIndex = this.coins.findIndex((b) => b.ID === coin.ID);
           this.coins.splice(coinIndex, 1);
         }

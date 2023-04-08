@@ -11,11 +11,15 @@ class Coin extends GeneralObject {
   coins = [];
 
 
+  sound__coin_collected = new Audio('audio/coin_collected.mp3');
+
+
   constructor() {
     super();
     this.loadCollection('imgPathsComplete', 'complete');
     this.img = this.collection.complete[0];
     this.animateCoin();
+    this.sound__coin_collected.volume = 0.2;
   }
 
   createCoins(startX, spreadX, quantity) {
@@ -53,6 +57,8 @@ class Coin extends GeneralObject {
       this.currentImage++;
     }, 1000);
   }
+
+
 
   imgPathsComplete = [
     'img/8_coin/coin_1.png',

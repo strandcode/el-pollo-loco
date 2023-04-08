@@ -16,6 +16,8 @@ class Rooster extends GeneralObject {
 
   alertedCount = 0;
 
+  sound_alerted_rooster = new Audio('audio/angry-chicken-imitation-short.mp3');
+
   // NOTE Intervals of the rooster
 
   interval__IsAlerted;
@@ -68,7 +70,6 @@ class Rooster extends GeneralObject {
       if (this.currentImage > this.collection.alert.length) {
         clearInterval(this.interval__IsAlerted);
         this.alertedCount++;
-        console.log('Rooster is alerted');
         this.img = this.collection.alert[this.collection.alert.length - 1];
         if (this.alertedCount >= 5) {
           this.alertedCount = 0;
@@ -89,7 +90,7 @@ class Rooster extends GeneralObject {
     // und pepe in sichtweite ist
     if (this.isAlive) {
       this.currentImage = 0;
-      // TODO this.playAudio('get_hurt_sound');
+      this.sound_alerted_rooster.play();
       this.interval__IsAttacking = setInterval(() => {
         this.img = this.collection.attack[this.currentImage];
         this.currentImage++;

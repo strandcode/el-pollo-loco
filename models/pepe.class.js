@@ -20,12 +20,13 @@ class Pepe extends GeneralObject {
   bottleLevel = 0;
   coinLevel = 0;
 
+  worldFocus = 0; // Verankerung Pepe und worldFocus
 
   // TODO Richtige Sounds besorgen, die nur so lang sind, für einen Schritt
-  walking_sound = new Audio('audio/running_clipped.mp3');
-  get_hurt_sound = new Audio('audio/getHurt.mp3');
+  sound_fast_steps = new Audio('audio/fast_steps.mp3')
+  sound_get_hurt = new Audio('audio/getHurt.mp3');
 
-  worldFocus = 0; // Verankerung Pepe und worldFocus
+
 
   constructor() {
     super();
@@ -38,6 +39,8 @@ class Pepe extends GeneralObject {
     this.img = this.collection.idle[0];
     this.applyGravity();
     this.checkIsOffGround();
+    this.sound_fast_steps.volume = 0.3;
+    this.sound_get_hurt.volume = 0.3;
   }
 
   moveRight() {
@@ -57,7 +60,6 @@ class Pepe extends GeneralObject {
 
   animateWalk() {
     if (walkingIntervalId === null) {
-      // this.playAudio('walking_sound');
       this.img = this.collection.walk[1];
 
       walkingIntervalId = setInterval(() => {
@@ -69,6 +71,7 @@ class Pepe extends GeneralObject {
         }
         // Setzt über das currentImage das Bild aus der walk serie
         this.img = this.collection.walk[this.currentImage];
+        this.playAudio('sound_fast_steps');
         this.currentImage++;
       }, 100);
     }
@@ -93,7 +96,7 @@ class Pepe extends GeneralObject {
 
   animateJump() {
     this.currentImage = 0;
-    // REVIEW this.playAudio('get_hurt_sound');
+    // this.playAudio('get_hurt_sound');
     let interval = setInterval(() => {
       this.img = this.collection.jump[this.currentImage];
       this.currentImage++;
@@ -107,7 +110,6 @@ class Pepe extends GeneralObject {
   isAttacked() {
     if (this.isAlive) {
       this.animateGetHurt();
-      console.log('Pepe is attacked! Energy: ' + this.energyLevel);
       if (this.energyLevel <= 0) {
         this.energyLevel = 0;
         this.isDying();
@@ -118,7 +120,7 @@ class Pepe extends GeneralObject {
 
   animateGetHurt() {
     this.currentImage = 0;
-    // REVIEW this.playAudio('get_hurt_sound');
+    this.playAudio('sound_get_hurt');
     let interval = setInterval(() => {
       this.img = this.collection.hurt[this.currentImage];
       this.currentImage++;
@@ -132,7 +134,6 @@ class Pepe extends GeneralObject {
   isDying() {
     if (this.isAlive) {
       this.animateDying();
-      console.log('Pepe is dead');
       this.isAlive = false;
     }
   }
@@ -145,7 +146,6 @@ class Pepe extends GeneralObject {
       this.jump();
       this.img = this.collection.dying[this.currentImage];
       this.currentImage++;
-      console.log(this.currentImage);
       if (this.currentImage > this.collection.dying.length) {
         clearInterval(interval);
         this.img = this.collection.hurt[2];
