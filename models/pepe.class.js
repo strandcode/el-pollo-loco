@@ -88,7 +88,8 @@ class Pepe extends GeneralObject {
   jump() {
     this.isFlying = true;
     this.canPosY -= this.speedY;
-    this.speedY = 10;
+    // this.speedY = 10; Original
+    this.speedY = 15;
     if (this.canPosY < -50) {
       this.speedY = 0;
     }

@@ -10,7 +10,7 @@ class GeneralObject {
   ctx;
 
   speedY = 0;
-  accelaration = 1;
+  accelaration = 1.5;
 
   offsetX = 0;
   offsetY = 0;

@@ -13,15 +13,12 @@ class Keyboard {
   checkKeyboard() {
 
     window.addEventListener('keydown', (event) => {
-      console.log(event);
-      console.log(event.code);
       if (event.code == 'Space') { keyboard.SPACE = true; };
       if (event.code == 'ArrowLeft') { keyboard.LEFT = true; };
       if (event.code == 'ArrowRight') { keyboard.RIGHT = true; };
       if (event.code == 'ArrowUp') { keyboard.UP = true; };
       if (event.code == 'ArrowDown') { keyboard.DOWN = true; };
       if (event.code == 'KeyD') { keyboard.THROW = true; };
-      console.log(keyboard);
     });
 
 

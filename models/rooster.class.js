@@ -115,7 +115,6 @@ class Rooster extends GeneralObject {
       // TODO this.playAudio('');
       this.animateGetHurt();
       this.energyLevel -= 20;
-      console.log('Rooster is attacked! Energy: ' + this.energyLevel);
 
       if (this.energyLevel <= 0) {
         this.energyLevel = 0;
@@ -145,7 +144,6 @@ class Rooster extends GeneralObject {
     clearInterval(this.interval__IsAttacking);
     clearInterval(this.interval__GetHurt);
     // clearInterval(this.interval__IsDying);
-    console.log('Alle Intervalle in Rooster gecleared');
   }
 
 
@@ -162,7 +160,7 @@ class Rooster extends GeneralObject {
         this.img = this.collection.dying[2];
         this.canPosY = 220;
         setTimeout(() => {
-          console.log('You win!!'); // TODO
+          // console.log('You win!!'); // TODO
         }, 1000);
       }
     }, 300);

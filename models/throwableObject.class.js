@@ -25,7 +25,6 @@ class ThrowableObject extends GeneralObject {
   }
 
   throw(x, y) {
-    console.log(this.bottleFlight);
     if (!this.bottleFlight) {
       this.bottleFlight = true;
       this.thrownBottleCount++;

@@ -73,7 +73,6 @@ class World {
     this.checkEnemyCollisions = setInterval(() => {
       this.chicks.forEach((chick) => {
         if (chick.isColliding(this.throwableObject) && chick.isAlive) {
-          console.log(chick.ID + ' wurde getroffen');
           chick.isAlive = false;
           this.enemiesBodyCount++;
           chick.stopWalkLeft();
@@ -83,7 +82,6 @@ class World {
 
       this.hens.forEach((hen) => {
         if (hen.isColliding(this.throwableObject) && hen.isAlive) {
-          console.log(hen.ID + ' wurde getroffen');
           hen.isAlive = false;
           this.enemiesBodyCount++;
           hen.stopWalkLeft();
@@ -96,7 +94,6 @@ class World {
         this.rooster.animateGetHurt();
         isRoosterDamaged = true;
         this.rooster.energyLevel -= 20;
-        console.log('Rooster is attacked! Energy: ' + this.rooster.energyLevel);
         this.statusBarRooster.show(this.rooster.energyLevel);
         setTimeout(() => {
           isRoosterDamaged = false;
@@ -163,6 +160,9 @@ class World {
           this.gameOverScreen.canPosY = 0;
           gameMusic.pause();
           this.rooster.sound_alerted_rooster.pause();
+          setTimeout(() => {
+            startNextLevel();
+          }, 5000);
         }, 2000);
       }
 
